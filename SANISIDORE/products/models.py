@@ -3,11 +3,14 @@ from django.db import models
 # Create your models here.
 
 class Product(models.Model):
-    ProductID = models.IntegerField(primary_key=True, max_length= 6, default=1000) 
-    ProductName = models.CharField(max_length=30)
-    ProductCost = models.FloatField(max_length=6)
+    ProductID = models.AutoField(primary_key=True) 
+    ProductName = models.CharField(max_length=30, null=False, blank=False)
+    ProductCost = models.FloatField(max_length=6,null=False, blank=False)
     objects = models.Manager()
+    
+    
 
+    
     def getID(self):
         return self.ProductID
 
@@ -16,6 +19,9 @@ class Product(models.Model):
     
     def getCost(self):
         return self.ProductCost
+
+    def __str__(self):
+        return f"{self.ProductID}, {self.ProductName}, {self.ProductCost}"
 
 
 
