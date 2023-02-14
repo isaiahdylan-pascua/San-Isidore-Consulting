@@ -52,14 +52,17 @@
       <div class="row">
         <table class="table table-bordered">
           <tbody>
+            {% block content %}
+            {% load static %}
             <tr id="head">
-              <th style="width: 1in; text-align: center;"><img class="BG"src="/Users/s.d./Downloads/BG.png" alt=""></th>
+              <th style="width: 1in; text-align: center;"><img class="BG" src="{% static "/products/Images/BG.png" %}" alt="BG"></th>
               <th>Orders</th>
               <th style="background-color: #F9F850; color:black;">Products</th>
               <th>Sales Report</th>
               <th>Customers</th>
               <th>Log Off</th>
             </tr>
+            {% endblock %}
           </tbody>
         </table>
       </div>

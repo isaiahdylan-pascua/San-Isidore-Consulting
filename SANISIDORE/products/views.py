@@ -26,4 +26,5 @@ def displayProduct(request):
 
     data = serializers.serialize("python", Product.objects.all())
 
-    return render(request, "products/ProductListPrototype.html", context={'data'= data})
+    context = {'data': data},
+    return render(request, "products/ProductListPrototype.html", context)
