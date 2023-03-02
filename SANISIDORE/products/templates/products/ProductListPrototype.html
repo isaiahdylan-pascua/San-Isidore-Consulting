@@ -52,17 +52,14 @@
       <div class="row">
         <table class="table table-bordered">
           <tbody>
-            {% block content %}
-            {% load static %}
             <tr id="head">
-              <th style="width: 1in; text-align: center;"><img class="BG" src="{% static "/products/Images/BG.png" %}" alt="BG"></th>
+              <th style="width: 1in; text-align: center;"><img class="BG" src="" alt="BG"></th>
               <th>Orders</th>
               <th style="background-color: #F9F850; color:black;">Products</th>
               <th>Sales Report</th>
               <th>Customers</th>
               <th>Log Off</th>
             </tr>
-            {% endblock %}
           </tbody>
         </table>
       </div>
@@ -77,6 +74,15 @@
                       <th>Price</th>
                       <th>No. Ordered</th>
                   </tr>
+                  {% for p in products %}
+                  <tr>
+                    <td></td>
+                    <td>{{p.ProductId}}</td>
+                    <td>{{p.ProductName}}</td>
+                    <td>{{p.ProductCost}}</td>
+                    <td></td>
+                  </tr>
+                  {% endfor %}
               </tbody>
               </table>
           </div>
@@ -101,6 +107,7 @@
             </table>
         </div>
       </div>
+      
     <!-- <script>
       const formEl = document.querySelector("form");
       const tbodyEl = document.querySelector("#products");

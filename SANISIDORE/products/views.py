@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.core import serializers
 from .models import *
+# from .models import products
 
 
 # Create your views here.
@@ -10,9 +11,11 @@ from .models import *
 
 
 def products(request):
-    return render(request, "products/ProductListPrototype.html")
+    products = Product.objects.all()
+    return render(request, "products/ProductListPrototype.html", {'products': products})
 
 def addProduct(request):
+    products = Product.objects.all()
     if request.method == "POST":
         prodname = request.POST['name']
         prodprice = request.POST['price']
@@ -20,11 +23,8 @@ def addProduct(request):
         new_prod = Product(ProductName=prodname, ProductCost=prodprice)
         new_prod.save()
     
-    return render(request, "products/ProductListPrototype.html")
+    return render(request, "products/ProductListPrototype.html", {'products': products})
 
 def displayProduct(request):
-
-    data = serializers.serialize("python", Product.objects.all())
-
-    context = {'data': data},
-    return render(request, "products/ProductListPrototype.html", context)
+    products = Product.objects.all()
+    return render(request, "products/test.html", {'products': products})
