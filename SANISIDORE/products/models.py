@@ -12,7 +12,7 @@ class Product(models.Model):
 
     
     def getID(self):
-        return self.ProductID
+        return self.pk
 
     def getName(self):
         return self.ProductName
