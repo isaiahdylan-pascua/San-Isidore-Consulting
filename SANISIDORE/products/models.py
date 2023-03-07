@@ -21,7 +21,7 @@ class Product(models.Model):
         return self.ProductCost
 
     def __str__(self):
-        return f"{self.ProductID}, {self.ProductName}, {self.ProductCost}"
+        return str(self.pk) + self.ProductName + str(self.ProductCost)
 
 
 
