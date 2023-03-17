@@ -14,12 +14,13 @@
     background-color: #50AF4F;
     color: white;
 }
-.form-popup {
+      .form-popup {
+        color: white;
         display: none;
         position: fixed;
         bottom: 0;
         right: 15px;
-        border: 3px solid #f1f1f1;
+        border: 3px solid #FAF850;
         z-index: 9;
       }
       
@@ -27,7 +28,7 @@
       .form-container {
         max-width: 300px;
         padding: 10px;
-        background-color: white;
+        background-color: #50AF4F;
       }
       
       /* Full-width input fields */
@@ -175,7 +176,7 @@
     <div class="form-popup" id="myForm">
       <form action="/action_page.php" class="form-container" >
       <table>
-        <th> Add Item</th>
+        <th>Add Item</th>
     
       <tr>
         <td><label for="code"><b>ItemID</b></label></td>
@@ -188,9 +189,9 @@
       </tr>
 
       <tr>
-        <td><label for="qty"><b>Quantity</b></label></td>
+        <td><label for="dsc"><b>Discount</b></label></td>
         <td>
-          <select name="qty" id="qty">
+          <select name="dsc" id="dsc">
             <option value=""></option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
