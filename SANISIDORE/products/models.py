@@ -8,9 +8,6 @@ class Product(models.Model):
     ProductCost = models.FloatField(max_length=6,null=False, blank=False)
     objects = models.Manager()
     
-    
-
-    
     def getID(self):
         return self.pk
 
@@ -23,7 +20,8 @@ class Product(models.Model):
     def __str__(self):
         return str(self.pk) + self.ProductName + str(self.ProductCost)
 
-
-
-
-
+class orderline(models.Model):
+    ProductID = models.ForeignKey('Product',on_delete=models.CASCADE)
+    ProductQty = models.IntegerField(null=False, blank=False)
+    Discount = models.BooleanField()
+    objects = models.Manager()

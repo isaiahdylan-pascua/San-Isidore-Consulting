@@ -28,3 +28,6 @@ def addProduct(request):
 def displayProduct(request):
     products = Product.objects.all()
     return render(request, "products/test.html", {'products': products})
+
+def Order(request):
+    return render(request, "products/Order.html")

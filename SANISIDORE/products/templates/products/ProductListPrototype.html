@@ -107,48 +107,6 @@
             </table>
         </div>
       </div>
-      
-    <!-- <script>
-      const formEl = document.querySelector("form");
-      const tbodyEl = document.querySelector("#products");
-      const tableEl = document.querySelector("#ptable");
-      idCounter = 1000;
-      function onAdditem(e) {
-        e.preventDefault();
-        const name = document.getElementById("name").value;
-        const price = document.getElementById("price").value;
-        const ordered = 0;
-        if(price<=0 && name.length == 0){
-          alert("Missing Fields");
-        }
-        else if(price<=0){
-          alert("Invalid Price");
-        }
-        else if(name.length == 0){
-          alert("no product");
-        }
-
-        else{
-          const itemno = idCounter++;
-          tbodyEl.innerHTML += `
-              <tr>
-                  <td style="position: sticky;"><button class="btn btn-danger">X</button></td>
-                  <td>${itemno}</td>
-                  <td>${name}</td>
-                  <td>${"₱ "+price}</td>
-                  <td>${ordered}</td>
-              </tr>
-          `;
-        }
-      }
-      function onDeleteRow(e) {
-        const btn = e.target;
-        btn.closest("tr").remove();
-        idCounter--;
-      }
-      formEl.addEventListener("submit", onAdditem);
-      tableEl.addEventListener("click", onDeleteRow);
-    </script> -->
     </div>
   </body>
 </html>
