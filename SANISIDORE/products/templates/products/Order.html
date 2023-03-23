@@ -111,15 +111,14 @@
               <th>
                 <select name="table" id="table">
                   <option value="" disabled></option>
-                  <option value="t1">Table 1</option>
-                  <option value="t2">Table 2</option>
-                  <option value="t3">Table 3</option>
+                  <option value="1">Table 1</option>
+                  <option value="2">Table 2</option>
+                  <option value="3">Table 3</option>
                 </select>
               </th>
               <th>Client</th>
               <th></th>
             </tr>
-
             <tr>
               <th><label for="PO">Payment Option</label></th>
               <th>
@@ -148,13 +147,12 @@
                 </select>
               </th>
             </tr>
-          </form>
+          </table>
+        </form>
+          <table class="table table-bordered" id="ordered">
             <tr>
-              <td><button class="open-button" onclick="openForm()">Add Item</button></td>
-              <td><a href="">Remove Item</a>
-              <td colspan="4"></td>
-                
-              </td>
+              <td colspan="3"><button class="btn btn-warning" onclick="openForm()">Add Item</button></td>
+              <td colspan="3"></td>
             </tr>
             <tr>
               <th>Product #</th>
@@ -199,7 +197,7 @@
       </tr>
 
       <tr>
-        <td><button type="submit" class="btn">Add order</button></td>
+        <td><button type="submit" class="btn btn-warning">Add order</button></td>
         <td><button type="button" class="btn cancel" onclick="closeForm()">Cancel</button></td>
         <td></td>
       </tr>

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.core import serializers
-from .models import *
+from .models import Product, Orders
 # from .models import products
 
 
@@ -36,7 +36,9 @@ def Order(request):
         PO = request.POST['PO']
         PWDS = request.POST['pwds']
         
-        new_order = Order(Server=server, Table=table, PaymentOption=PO, PWDS=PWDS)
+        new_order = Orders(Server=server,Table=table, PaymentOption=PO, PWDS=PWDS)
         new_order.save()
+
+
 
     return render(request, "products/Order.html")
