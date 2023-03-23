@@ -30,6 +30,10 @@ def displayProduct(request):
     return render(request, "products/test.html", {'products': products})
 
 def Order(request):
+    if len(Orders.objects.all()) > 1:
+        orderno = Orders.objects.order_by('-OrderID')[0].getID
+    else:
+        orderno = 0
     if request.method == "POST":
         server = request.POST['server']
         table = request.POST['table']
@@ -41,4 +45,17 @@ def Order(request):
 
 
 
-    return render(request, "products/Order.html")
+    return render(request, "products/Order.html", {'orderno': orderno})
+
+# def Orderline(request):
+#     orderno = Orders.objects.order_by('-OrderID')[0].getID
+#     if request.method == "POST":
+#         orderid = orderno
+#         pID = request.POST['ItemID']
+#         pqty = request.POST['qty']
+#         dsc = request.POST['dsc']
+
+#         new_orderline = Orderlines(OrderID=orderid, ProductID=pID, ProductQty=pqty, Discount=dsc)
+#         new_orderline.save()
+
+#     return render(request, "products/Order.html")

@@ -101,7 +101,8 @@
             <tr>
               <th>Cancel</th>
               <th>Finish and Generate Receipt</th>
-              <th colspan="4"><button type="submit" class="btn btn-warning">Initialize Order</button></th>
+              <th colspan="2"><button type="submit" class="btn btn-warning">Initialize Order</button></th>
+              <th colspan="2">Order No. {{orderno}}</th>
             </tr>
 
             <tr>
@@ -166,14 +167,22 @@
         </div>
       </div>
     </div>
+
+
+
+
+
+
+
     <div class="form-popup" id="myForm">
-      <form action="orderline" method="POST" class="form-container" >
+      <form action="Orderline" method="POST" class="form-container" >
+        {% csrf_token %}
       <table>
         <th>Add Item</th>
     
       <tr>
         <td><label for="ItemID"><b>ItemID</b></label></td>
-        <td><input type="number" placeholder="Select Item ID" name="code" id="ItemID" required></td>
+        <td><input type="number" placeholder="Select Item ID" name="ItemID" id="ItemID" required></td>
       </tr>
       
       <tr>
@@ -186,8 +195,8 @@
         <td>
           <select name="dsc" id="dsc">
             <option value=""></option>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
+            <option value="True">Yes</option>
+            <option value="False">No</option>
         </td>
       </tr>
 
@@ -202,8 +211,8 @@
         <td></td>
       </tr>
         
-      </form>
     </table>
+  </form>
     </div>
     
     <script>
