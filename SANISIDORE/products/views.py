@@ -36,7 +36,8 @@ def Order(request):
         PO = request.POST['PO']
         PWDS = request.POST['pwds']
         
-        new_order = Order(Server=server, Table=table, PaymentOption=PO, PWDS=PWDS)
+        cash = 'cash'
+        new_order = Order(PaymentOption=cash)
         new_order.save()
 
 

@@ -27,6 +27,7 @@ class Order(models.Model):
     Table = models.CharField(max_length=30, null=False, blank=False)
     PaymentOption = models.CharField(max_length=30, null=False, blank=False)
     PWDS = models.BooleanField()
+    objects = models.Manager()
 
     def getID(self):
         return self.pk
