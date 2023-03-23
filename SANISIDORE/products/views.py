@@ -30,4 +30,14 @@ def displayProduct(request):
     return render(request, "products/test.html", {'products': products})
 
 def Order(request):
+    if request.method == "POST":
+        server = request.POST['server']
+        table = request.POST['table']
+        PO = request.POST['PO']
+        PWDS = request.POST['pwds']
+        
+        new_order = Order(Server=server, Table=table, PaymentOption=PO, PWDS=PWDS)
+        new_order.save()
+
+
     return render(request, "products/Order.html")

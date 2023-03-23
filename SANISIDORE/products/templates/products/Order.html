@@ -95,12 +95,14 @@
 
       <div class="row">
         <div class="col">
+          <form action="Order" method="POST">
+            {% csrf_token %}
           <table class="table table-bordered"  id="order">
 
             <tr>
               <th>Cancel</th>
               <th>Finish and Generate Receipt</th>
-              <th colspan="4"></th>
+              <th colspan="4"><button type="submit" class="btn btn-warning">Initialize Order</button></th>
             </tr>
 
             <tr>
@@ -131,7 +133,7 @@
               </th>
               <th>Server</th>
               <th>
-                <select name="Server" id="Server">
+                <select name="server" id="server">
                   <option value=""></option>
                   <option value="Sage">Sage</option>
                   <option value="Dylan">Dylan</option>
@@ -147,6 +149,7 @@
                 </select>
               </th>
             </tr>
+          </form>
             <tr>
               <td><button class="open-button" onclick="openForm()">Add Item</button></td>
               <td><a href="">Remove Item</a>
@@ -162,27 +165,18 @@
               <th>Discount</th>
               <th>Adjusted Price</th>
             </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-
           </table>
         </div>
       </div>
     </div>
     <div class="form-popup" id="myForm">
-      <form action="order" method="POST" class="form-container" >
+      <form action="orderline" method="POST" class="form-container" >
       <table>
         <th>Add Item</th>
     
       <tr>
-        <td><label for="code"><b>ItemID</b></label></td>
-        <td><input type="number" placeholder="Select Item ID" name="code" required></td>
+        <td><label for="ItemID"><b>ItemID</b></label></td>
+        <td><input type="number" placeholder="Select Item ID" name="code" id="ItemID" required></td>
       </tr>
       
       <tr>
