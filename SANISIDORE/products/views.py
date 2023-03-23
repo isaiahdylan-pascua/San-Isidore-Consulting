@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.core import serializers
@@ -31,13 +31,12 @@ def displayProduct(request):
 
 def Order(request):
     if request.method == "POST":
-        server = request.POST.get('server')
-        table = request.POST.get('table')
-        PO = request.POST.get('PO')
-        PWDS = request.POST.get('pwds')
+        server = request.POST['server']
+        table = request.POST['table']
+        PO = request.POST['PO']
+        PWDS = request.POST['pwds']
         
-        new_ord = Order(Server=server, Table=table, PaymentOption=PO, PWDS=PWDS)
-        new_ord.save()
-
+        new_order = Order(Server=server, Table=table, PaymentOption=PO, PWDS=PWDS)
+        new_order.save()
 
     return render(request, "products/Order.html")
