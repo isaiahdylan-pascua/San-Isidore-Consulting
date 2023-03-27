@@ -181,8 +181,16 @@
         <th>Add Item</th>
     
       <tr>
-        <td><label for="ItemID"><b>ItemID</b></label></td>
-        <td><input type="number" placeholder="Select Item ID" name="ItemID" id="ItemID" required></td>
+        <td><label for="Product"><b>Product</b></label></td>
+        <!-- <td><input type="text" placeholder="Select Item ID" name="Product" id="Product" required></td> -->
+        <td>
+          <select name="Product" id="Product">
+            <option value="" disabled>Enter Product</option>
+            {% for p in products %}
+            <option value="{{p.pk}}">{{p.ProductName}}</option>
+            {% endfor %}
+          </select>
+        </td>
       </tr>
       
       <tr>

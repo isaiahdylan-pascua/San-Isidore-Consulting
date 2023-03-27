@@ -5,9 +5,6 @@ admin.site.register(Product)
 from .models import Orders
 admin.site.register(Orders)
 
-from .models import test
-admin.site.register(test)
-
-# from .models import Orderline
-# admin.site.register(Orderline)
+from .models import Orderlines
+admin.site.register(Orderlines)
 # Register your models here.

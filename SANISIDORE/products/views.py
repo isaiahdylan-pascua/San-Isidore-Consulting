@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.core import serializers
-from .models import Product, Orders
+from .models import Product, Orders, Orderlines
 # from .models import products
 
 
@@ -30,8 +30,9 @@ def displayProduct(request):
     return render(request, "products/test.html", {'products': products})
 
 def Order(request):
-    if len(Orders.objects.all()) > 1:
-        orderno = Orders.objects.order_by('-OrderID')[0].getID
+    products = Product.objects.all()
+    if len(Orders.objects.all()) > 0:
+        orderno = Orders.objects.order_by('-OrderID')[0].pk
     else:
         orderno = 0
     if request.method == "POST":
@@ -45,17 +46,18 @@ def Order(request):
 
 
 
-    return render(request, "products/Order.html", {'orderno': orderno})
+    return render(request, "products/Order.html", {'orderno': orderno, 'products': products})
 
-# def Orderline(request):
-#     orderno = Orders.objects.order_by('-OrderID')[0].getID
-#     if request.method == "POST":
-#         orderid = orderno
-#         pID = request.POST['ItemID']
-#         pqty = request.POST['qty']
-#         dsc = request.POST['dsc']
+def Orderline(request):
+    products = Product.objects.all()
+    orderno = Orders.objects.order_by('-OrderID')[0].pk
+    if request.method == "POST":
+        orderid = orderno
+        P = request.POST['Product']
+        pqty = request.POST['qty']
+        dsc = request.POST['dsc']
 
-#         new_orderline = Orderlines(OrderID=orderid, ProductID=pID, ProductQty=pqty, Discount=dsc)
-#         new_orderline.save()
+        new_orderline = Orderlines(OrderID=orderid, Product=P, ProductQty=pqty, Discount=dsc)
+        new_orderline.save()
 
-#     return render(request, "products/Order.html")
+    return render(request, "products/Order.html", {'orderno': orderno, 'products': products})

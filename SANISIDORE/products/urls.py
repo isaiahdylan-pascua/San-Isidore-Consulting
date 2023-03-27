@@ -6,5 +6,5 @@ urlpatterns = [
     path('addProduct', views.addProduct, name='addProduct'),
     path('displayProduct', views.displayProduct, name='displayProduct'),
     path('Order', views.Order, name='Order'),
-    # path('Orderline', views.Orderline, name='Orderline')
+    path('Orderline', views.Orderline, name='Orderline')
 ]

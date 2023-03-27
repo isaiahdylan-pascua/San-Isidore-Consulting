@@ -18,7 +18,7 @@ class Product(models.Model):
         return self.ProductCost
 
     def __str__(self):
-        return str(self.pk) + self.ProductName + str(self.ProductCost)
+        return "ProductID: "+str(self.pk) + " Name: " + str(self.ProductName) + " |Php: " +str(self.ProductCost)
 
 class Orders(models.Model):
     OrderID = models.AutoField(primary_key=True)
@@ -59,21 +59,24 @@ class Orders(models.Model):
 #     objects = models.Manager()
 
 
-class test(models.Model):
-    OrderID = models.ForeignKey('Orders',on_delete=models.CASCADE, default='0')
-    # ProductID = models.IntegerField(null=False, blank=False)
-    # ProductQty = models.IntegerField(null=False, blank=False)
-    # Discount = models.CharField(max_length=30, blank=True)
+class Orderlines(models.Model):
+    OrderID = models.IntegerField(null=False, blank=False)
+    Product = models.IntegerField(null=False, blank=False)
+    ProductQty = models.IntegerField(null=False, blank=False)
+    Discount = models.CharField(max_length=30, blank=True)
     objects = models.Manager()
     
-    # def getID(self):
-    #     return self.pk
+    def getOID(self):
+        return self.OrderID
 
-    # def getPID(self):
-    #     return self.ProductID
+    def getP(self):
+        return self.Product
     
-    # def getCost(self):
-    #     return self.ProductCost
+    def getPQty(self):
+        return self.ProductQty
+    
+    def getDsc(self):
+        return self.Discount
 
-    # def __str__(self):
-    #     return str(self.pk) + self.ProductName + str(self.ProductCost)    
+    def __str__(self):
+        return "OrderID: " + str(self.OrderID) + " |ProductID: " + str(self.Product) + " |Quantity: " + str(self.ProductQty) + " |Discounted: " + str(self.Discount)
