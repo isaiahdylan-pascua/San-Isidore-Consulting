@@ -35,6 +35,8 @@ def Order(request):
         orderno = Orders.objects.order_by('-OrderID')[0].pk
     else:
         orderno = 0
+    ol = Orderlines.objects.filter(OrderID=orderno)
+
     if request.method == "POST":
         server = request.POST['server']
         table = request.POST['table']
@@ -46,11 +48,16 @@ def Order(request):
 
 
 
-    return render(request, "products/Order.html", {'orderno': orderno, 'products': products})
+    return render(request, "products/Order.html", {'orderno': orderno, 'products': products, 'ol':ol})
 
 def Orderline(request):
     products = Product.objects.all()
-    orderno = Orders.objects.order_by('-OrderID')[0].pk
+    if len(Orders.objects.all()) > 0:
+        orderno = Orders.objects.order_by('-OrderID')[0].pk
+    else:
+        orderno = 0
+    ol = Orderlines.objects.filter(OrderID=orderno)
+
     if request.method == "POST":
         orderid = orderno
         P = request.POST['Product']
@@ -60,4 +67,14 @@ def Orderline(request):
         new_orderline = Orderlines(OrderID=orderid, Product=P, ProductQty=pqty, Discount=dsc)
         new_orderline.save()
 
-    return render(request, "products/Order.html", {'orderno': orderno, 'products': products})
+        Q = int(Product.objects.filter(ProductID=P)[0].ProductCost)
+        FP = Q*pqty
+
+    return render(request, "products/Order.html", 
+    {
+        'orderno': orderno, 
+        'products': products, 
+        'ol':ol, 
+        'Q':Q,
+        'FP':FP
+    })

@@ -163,6 +163,16 @@
               <th>Discount</th>
               <th>Adjusted Price</th>
             </tr>
+          {% for ol in ol %}
+            <tr>
+              <th>{{ol.Product}}</th>
+              <th>Description</th>
+              <th>{{ol.ProductQty}}</th>
+              <th>{{Q}}</th>
+              <th>{{ol.Discount}}</th>
+              <th></th>
+            </tr>
+            {% endfor %}
           </table>
         </div>
       </div>
