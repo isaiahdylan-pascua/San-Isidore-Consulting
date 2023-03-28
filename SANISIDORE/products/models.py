@@ -62,8 +62,10 @@ class Orders(models.Model):
 class Orderlines(models.Model):
     OrderID = models.IntegerField(null=False, blank=False)
     Product = models.IntegerField(null=False, blank=False)
+    ProductCost = models.FloatField()
     ProductQty = models.IntegerField(null=False, blank=False)
     Discount = models.CharField(max_length=30, blank=True)
+    Finalprice = models.FloatField()
     objects = models.Manager()
     
     def getOID(self):

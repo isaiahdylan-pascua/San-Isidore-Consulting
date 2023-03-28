@@ -64,17 +64,46 @@ def Orderline(request):
         pqty = request.POST['qty']
         dsc = request.POST['dsc']
 
-        new_orderline = Orderlines(OrderID=orderid, Product=P, ProductQty=pqty, Discount=dsc)
+        PCost = int(Product.objects.filter(ProductID=P)[0].ProductCost)
+
+        if dsc == 'True':
+            FP = 0
+        else:
+            FP = int(pqty)*PCost
+
+        new_orderline = Orderlines(OrderID=orderid, Product=P, ProductCost=PCost, ProductQty=pqty, Discount=dsc, Finalprice=FP)
         new_orderline.save()
 
-        Q = int(Product.objects.filter(ProductID=P)[0].ProductCost)
-        FP = Q*pqty
 
     return render(request, "products/Order.html", 
     {
         'orderno': orderno, 
         'products': products, 
-        'ol':ol, 
-        'Q':Q,
-        'FP':FP
+        'ol':ol
+    })
+
+def Receipt(request):
+    orderno = Orders.objects.order_by('-OrderID')[0]
+    ol = Orderlines.objects.filter(OrderID=Orders.objects.order_by('-OrderID')[0].pk)
+    subtotal = 0
+    pwds = 0
+    for x in ol:
+        subtotal = subtotal + x.Finalprice
+    
+    if orderno.PWDS == 'True':
+        pwds = subtotal*.2
+    
+    total = subtotal - pwds
+    
+    
+
+
+    return render(request, "products/Receipt.html", 
+    {
+        'orderno': orderno,  
+        'ol':ol,
+        'subtotal':subtotal,
+        'pwds':pwds,
+        'total':total
+
     })
