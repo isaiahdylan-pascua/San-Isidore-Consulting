@@ -48,12 +48,13 @@
     </style>
   </head>
   <body style="background-color: #2b9736;">
+    {% load static %}
     <div class="container-fluid">
       <div class="row">
         <table class="table table-bordered">
           <tbody>
             <tr id="head">
-              <th style="width: 1in; text-align: center;"><img class="BG" src="" alt="BG"></th>
+              <th style="width: 1in; text-align: center;"><img class="BG" src="{% static 'Images/BG.png' %}" alt="BG"></th>
               <th>Orders</th>
               <th style="background-color: #F9F850; color:black;">Products</th>
               <th>Sales Report</th>

@@ -6,7 +6,7 @@
 
     <style>
         body {
-  background: #50AF4F; /* fallback for old browsers */
+  background: #50AF4F;
   background: -webkit-linear-gradient(right, #50AF4F, #50AF4F);
   background: -moz-linear-gradient(right, #50AF4F, #50AF4F);
   background: -o-linear-gradient(right, #50AF4F, #50AF4F);
@@ -17,26 +17,63 @@
 }
       .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, 
       .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
-    background-color: #ffffff;
-    color: rgb(48, 48, 48);
-    margin-left: 0cm;
-    margin-right:20cm;
+        border: 1px solid black;   
+        background-color: #50AF4F;
+        color: white;
 }
+.textboxclass{
+        width: 500px;
+      }
+
+      .BG{
+        width: 1cm;
+      }
+      .currentpage{
+        background-color: #F9F850;
+      }
+      th{
+        text-align: center;
+      }
     #rec{
+        font-family:Verdana, Geneva, Tahoma, sans-serif ;
+        background-color: #ffffff;
+        color: rgb(48, 48, 48);
+        margin-left: 0cm;
+        margin-right:20cm;
         margin-left: auto;
         margin-right: auto;
         margin-top: 2cm;
         text-align: center;
     }
+    #Rpic{
+      filter: grayscale(100%);
+      width: 1.5in;
+    }
 
 </style>
 
     </head>
-        <body> 
+        <body>
+          {% load static %}
             <div class="container-fluid">
-        <table class="table-bordered" id="rec">
+                <div class="row">
+                    <table class="table table-bordered">
+                      <tbody>
+                        <tr id="head">
+                          <th style="width: 1in; text-align: center;"><img class="BG" src="{% static 'Images/BG.png' %}" alt="BG"></th>
+                          <th>Orders</th>
+                          <th style="background-color: #F9F850; color:black;">Products</th>
+                          <th>Sales Report</th>
+                          <th>Customers</th>
+                          <th>Log Off</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+        <table id="rec">
             <thead>
-                <th colspan="3">Boodle Gang Inc.</th>
+              <tr><th style="width: 1in; text-align: center;" colspan="3"><img id="Rpic" src="{% static 'Images/BG.png' %}" alt="BG"></th></tr>  
+              <th colspan="3" style="font-family: cursive; font-size: 1cm;">Boodle Gang Inc.</th>
                 <tr><td colspan="3">Owned & Optd. by: Madelyn Ren</td></tr>
                 <tr><td colspan="3">M.V. Villar Ave. Molino III, Bacoor, Philippines</td></tr>
                 <tr><td colspan="3">VAT Reg TIN:</td></tr>
@@ -56,7 +93,7 @@
                 {% for ol in ol %}
                 <tr>
                     <td>{{ol.ProductQty}}</td>
-                    <td>-</td>
+                    <td>{{ol.ProductDesc}}</td>
                     <td>{{ol.Finalprice}}</td>
                 </tr>
                 {% endfor %}
@@ -79,6 +116,7 @@
 
             </tbody>
         </table> 
+        <button type="submit" class="btn btn-warning"></button>
             </div> 
         </body>
 </html>

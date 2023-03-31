@@ -63,6 +63,7 @@ class Orderlines(models.Model):
     OrderID = models.IntegerField(null=False, blank=False)
     Product = models.IntegerField(null=False, blank=False)
     ProductCost = models.FloatField()
+    ProductDesc = models.CharField(max_length=30, blank=True)
     ProductQty = models.IntegerField(null=False, blank=False)
     Discount = models.CharField(max_length=30, blank=True)
     Finalprice = models.FloatField()
