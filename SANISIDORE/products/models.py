@@ -27,6 +27,7 @@ class Orders(models.Model):
     Table = models.CharField(max_length=30, blank=False)
     PaymentOption = models.CharField(max_length=30, blank=False)
     PWDS = models.CharField(max_length=30, blank=False)
+    Tendered = models.FloatField(null=True)
     objects = models.Manager()
 
     def getID(self):
@@ -47,8 +48,11 @@ class Orders(models.Model):
     def getPWDS(self):
         return self.PWDS
 
+    def getTendered(self):
+        return self.Tendered
+
     def __str__(self):
-        return "OrderID: "+str(self.pk) + " |Y-M-D: " + str(self.Date) + " |Server: " +str(self.Server) + " |Table No.: " + str(self.Table) + " |Paid via " + str(self.PaymentOption) + str(self.PWDS)
+        return "OrderID: "+str(self.pk) + " |Y-M-D: " + str(self.Date) + " |Server: " +str(self.Server) + " |Table No.: " + str(self.Table) + " |Paid: " + str(self.Tendered) + " via " + str(self.PaymentOption) + str(self.PWDS)
 
 
 # class Orderlines(models.Model):

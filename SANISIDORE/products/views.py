@@ -33,10 +33,11 @@ def displayProduct(request):
 def Order(request):
     #List of all products
     products = Product.objects.all()
+    current_order = Orders.objects.order_by('-OrderID')[0]
 
     #If Order list is empty, assign 0 to orderno
     if len(Orders.objects.all()) > 0:
-        orderno = Orders.objects.order_by('-OrderID')[0].pk
+        orderno = current_order.pk
     else:
         orderno = 0
 
@@ -48,12 +49,14 @@ def Order(request):
         table = request.POST['table']
         PO = request.POST['PO']
         PWDS = request.POST['pwds']
+        T = request.POST['tendered']
 
         edit_order = Orders.objects.get(pk=orderno)
         edit_order.Server = server
         edit_order.Table = table
         edit_order.PaymentOption = PO
         edit_order.PWDS = PWDS
+        edit_order.Tendered = T
         edit_order.save()
         
         
@@ -66,14 +69,16 @@ def Order(request):
 
     return render(request, "products/Order.html", 
     {'orderno': orderno, 
+    'current_order':current_order,
     'products': products, 
     'ol':ol
     })
 
 def Orderline(request):
     products = Product.objects.all()
+    current_order = Orders.objects.order_by('-OrderID')[0]
     if len(Orders.objects.all()) > 0:
-        orderno = Orders.objects.order_by('-OrderID')[0].pk
+        orderno = current_order.pk
     else:
         orderno = 0
     ol = Orderlines.objects.filter(OrderID=orderno)
@@ -90,11 +95,43 @@ def Orderline(request):
         else:
             FP = int(pqty)*PCost
 
+        if len(Orderlines.objects.filter(Product = P, OrderID = orderid)) == 0:
+            new_orderline = Orderlines(OrderID=orderid, Product=P, ProductCost=PCost, ProductQty=pqty, Discount=dsc, ProductDesc=Pdesc, Finalprice=FP)
+            new_orderline.save()
+            return redirect('Order')
+        else:
+            edit_orderline = Orderlines.objects.get(Product = P, OrderID = orderid)
+            edit_orderline.ProductCost = PCost
+            edit_orderline.ProductQty = pqty
+            edit_orderline.Discount = dsc
+            edit_orderline.ProductDesc = Pdesc
+            edit_orderline.Finalprice = FP
+            edit_orderline.save()
+            return redirect('Order')   
 
 
-        new_orderline = Orderlines(OrderID=orderid, Product=P, ProductCost=PCost, ProductQty=pqty, Discount=dsc, ProductDesc=Pdesc, Finalprice=FP)
-        new_orderline.save()
+        return render(request, "products/Order.html", 
+    {
+        'orderno': orderno, 
+        'current_order':current_order,
+        'products': products, 
+        'ol':ol
+    })
 
+def Delete(request):
+    products = Product.objects.all()
+    if len(Orders.objects.all()) > 0:
+        orderno = Orders.objects.order_by('-OrderID')[0].pk
+    else:
+        orderno = 0
+    ol = Orderlines.objects.filter(OrderID=orderno)
+
+    if request.method == "POST":
+        orderid = orderno
+        P = request.POST['delete']
+        close_orderline = Orderlines.objects.get(OrderID=orderno, Product=P)
+        close_orderline.delete()
+        return redirect('Order')
 
     return render(request, "products/Order.html", 
     {
@@ -116,33 +153,14 @@ def Receipt(request):
     
     total = subtotal - pwds
     
-    # if request.method == "POST":
-    #     # server = request.POST['server']
-    #     # table = request.POST['table']
-    #     # PO = request.POST['PO']
-    #     # PWDS = request.POST['pwds']
-
-    #     # edit_order = Orders.objects.get(pk=orderno.pk)
-    #     # edit_order.Server = server
-    #     # edit_order.Table = table
-    #     # edit_order.PaymentOption = PO
-    #     # edit_order.PWDS = PWDS
-    #     # edit_order.save()
-
-    #     new_order = Orders()
-    #     new_order.save()
-    #     messages.info(request, 'Generating Receipt')
-    #     return redirect('Receipt')
-
-    
-
-
+    change = orderno.Tendered - total
     return render(request, "products/Receipt.html", 
     {
         'orderno': orderno,  
         'ol':ol,
         'subtotal':subtotal,
         'pwds':pwds,
-        'total':total
+        'total':total,
+        'change':change
 
     })

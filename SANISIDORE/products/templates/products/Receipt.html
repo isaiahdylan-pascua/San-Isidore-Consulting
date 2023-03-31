@@ -3,7 +3,7 @@
         <title>Receipt</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    {% load static %}
     <style>
         body {
   background: #50AF4F;
@@ -37,6 +37,7 @@
     #rec{
         font-family:Verdana, Geneva, Tahoma, sans-serif ;
         background-color: #ffffff;
+        /* background-image: url('{% static "Images/receipt.png"%}'); */
         color: rgb(48, 48, 48);
         margin-left: 0cm;
         margin-right:20cm;
@@ -49,9 +50,14 @@
       filter: grayscale(100%);
       width: 1.5in;
     }
+    #return{
+      margin: auto;
+  width: 20%;
+  border: 3px;
+  padding: 10px;
+    }
 
 </style>
-
     </head>
         <body>
           {% load static %}
@@ -70,6 +76,7 @@
                       </tbody>
                     </table>
                   </div>
+        <div class="row">
         <table id="rec">
             <thead>
               <tr><th style="width: 1in; text-align: center;" colspan="3"><img id="Rpic" src="{% static 'Images/BG.png' %}" alt="BG"></th></tr>  
@@ -107,16 +114,19 @@
                     <td>{{total}}</td>
                 </tr>
                 <tr><td colspan="3">Tendered:</td></tr>
-                <tr><td colspan="2">X</td>
-                    <td>-</td>
+                <tr><td colspan="2">{{orderno.PaymentOption}}</td>
+                    <td>{{orderno.Tendered}}</td>
                 </tr>
                 <tr><td colspan="2">Change</td>
-                    <td>-</td>
+                    <td>{{change}}</td>
                 </tr>
 
             </tbody>
         </table> 
-        <button type="submit" class="btn btn-warning"></button>
+      </div>
+      <div class="row" style="">
+        <a href="{% url 'Order' %}" id="return"><button type="submit" class="btn btn-warning">Return to Order Screen</button></a>
+      </div>
             </div> 
         </body>
 </html>

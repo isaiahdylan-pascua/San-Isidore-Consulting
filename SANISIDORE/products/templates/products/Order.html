@@ -108,17 +108,18 @@
 
               <form action="Order" method="POST">
                 {% csrf_token %}
-              <th colspan="3"><button type="submit" class="btn btn-warning">Generate Receipt</button></th>
+              <th colspan="2"><button type="submit" class="btn btn-warning">Generate Receipt and Pay:</button></th>
+              <th><input type="number" name="tendered"></th>
               <th colspan="2">Order No. {{orderno}}</th>
             </tr>
 
             <tr>
               <th>Date</th>
-              <th></th>
+              <th>{{ current_order.Date }}</th>
               <th><label for="table">Table</label></th>
               <th>
                 <select name="table" id="table">
-                  <option value="" disabled></option>
+                  <option value="" disabled selected>Table No.</option>
                   <option value="1">Table 1</option>
                   <option value="2">Table 2</option>
                   <option value="3">Table 3</option>
@@ -131,7 +132,7 @@
               <th><label for="PO">Payment Option</label></th>
               <th>
                 <select name="PO" id="PO" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                  <option value="" disabled></option>
+                  <option value="" disabled selected>Enter Mode of Payment</option>
                   <option value="Cash">Cash</option>
                   <option value="GCASH">GCASH</option>
                   <option value="CD">Credit/Debit Card</option>
@@ -140,7 +141,7 @@
               <th><label for="server">Server</label></th>
               <th>
                 <select name="server" id="server">
-                  <option value="" disabled></option>
+                  <option value="" disabled selected>Server Name</option>
                   <option value="Sage">Sage</option>
                   <option value="Dylan">Dylan</option>
                   <option value="Mica">Mica</option>
@@ -149,7 +150,7 @@
               <th><label for="pwds">PWD / Senior</label></th>
               <th>
                 <select name="pwds" id="pwds">
-                  <option value="" disabled></option>
+                  <option value="" disabled selected></option>
                   <option value="True">Senior</option>
                   <option value="True">PWD</option>
                 </select>
@@ -157,12 +158,21 @@
             </tr>
           </table>
         </form>
+
+
+
+
+
+
+
+        
           <table class="table table-bordered" id="ordered">
             <tr>
-              <td colspan="3"><button class="btn btn-warning" onclick="openForm()">Add Item</button></td>
-              <td colspan="3"></td>
+              <td colspan="7"><button class="btn btn-warning" onclick="openForm()">Add Item</button></td>
+
             </tr>
             <tr>
+              <th>Delete</th>
               <th>Product #</th>
               <th>Description</th>
               <th>Qty</th>
@@ -172,6 +182,13 @@
             </tr>
           {% for ol in ol %}
             <tr>
+              <th>
+                <form action="Delete" method="POST">
+                  {% csrf_token %}
+                <!-- <button type="submit" class="btn btn-danger" name="Product" value={{ol.Product}}>X</button> -->
+                <input class="btn btn-default btn-danger" name="delete" type="submit" value="{{ol.Product}}"/>
+              </th>
+            </form>
               <th>{{ol.Product}}</th>
               <th>{{ol.ProductDesc}}</th>
               <th>{{ol.ProductQty}}</th>
@@ -195,7 +212,7 @@
       <form action="Orderline" method="POST" class="form-container" >
         {% csrf_token %}
       <table>
-        <th>Add Item</th>
+        <th>Add Item / Edit Item</th>
     
       <tr>
         <td><label for="Product"><b>Product</b></label></td>
@@ -231,7 +248,7 @@
 
       <tr>
         <td><button type="submit" class="btn btn-warning">Add order</button></td>
-        <td><button type="button" class="btn cancel" onclick="closeForm()">Cancel</button></td>
+        <td><button type="button" class="btn btn-warning" onclick="closeForm()">Cancel</button></td>
         <td></td>
       </tr>
         
