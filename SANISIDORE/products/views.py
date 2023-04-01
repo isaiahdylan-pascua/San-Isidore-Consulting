@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
-from .models import Product, Orders, Orderlines
+from .models import *
+
 from django.contrib import messages
+
 # from .models import products
 
 
@@ -164,3 +168,36 @@ def Receipt(request):
         'change':change
 
     })
+    
+def Log_in(request):
+    if(request.method == "POST"):
+        un = request.POST.get('username')
+        pw = request.POST.get('password')
+        user = authenticate(request, username=un ,password=pw)
+    
+        if user is not None:
+            messages.success(request, 'SUCCESSFUL LOGIN')
+            login(request,user)
+            return redirect('products')
+        
+        else:
+            messages.info(request, 'INVALID LOGIN')
+            return redirect('products')
+    else:
+        return render(request, 'products/Login.html', {})
+    
+def signup(request):
+    if(request.method == "POST"):
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            login(request,user)
+            messages.success(request, ('REGISTRATED USER SUCCESSFULLY'))
+            return redirect('products')        
+    else:
+        form = UserCreationForm()
+        
+    return render(request, 'products/Signup.html', {})

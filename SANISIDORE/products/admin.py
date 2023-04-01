@@ -8,3 +8,4 @@ admin.site.register(Orders)
 from .models import Orderlines
 admin.site.register(Orderlines)
 # Register your models here.
+

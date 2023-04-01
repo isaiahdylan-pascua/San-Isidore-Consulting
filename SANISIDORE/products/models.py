@@ -87,3 +87,4 @@ class Orderlines(models.Model):
 
     def __str__(self):
         return "OrderID: " + str(self.OrderID) + " |ProductID: " + str(self.Product) + " |Quantity: " + str(self.ProductQty) + " |Discounted: " + str(self.Discount)
+    
