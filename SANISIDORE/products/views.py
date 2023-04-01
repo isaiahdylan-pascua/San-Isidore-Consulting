@@ -4,9 +4,11 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
 from .models import *
-
 from django.contrib import messages
+
+
 
 # from .models import products
 
@@ -14,11 +16,12 @@ from django.contrib import messages
 # Create your views here.
 
 
-
+@login_required
 def products(request):
     products = Product.objects.all()
     return render(request, "products/ProductListPrototype.html", {'products': products})
 
+@login_required
 def addProduct(request):
     products = Product.objects.all()
     if request.method == "POST":
@@ -30,14 +33,16 @@ def addProduct(request):
     
     return render(request, "products/ProductListPrototype.html", {'products': products})
 
+@login_required
 def displayProduct(request):
     products = Product.objects.all()
     return render(request, "products/test.html", {'products': products})
 
+@login_required
 def Order(request):
     #List of all products
     products = Product.objects.all()
-    current_order = Orders.objects.order_by('-OrderID')[0]
+    current_order = Orders.objects.order_by('-OrderID')
 
     #If Order list is empty, assign 0 to orderno
     if len(Orders.objects.all()) > 0:
@@ -78,6 +83,7 @@ def Order(request):
     'ol':ol
     })
 
+@login_required
 def Orderline(request):
     products = Product.objects.all()
     current_order = Orders.objects.order_by('-OrderID')[0]
@@ -122,6 +128,7 @@ def Orderline(request):
         'ol':ol
     })
 
+@login_required
 def Delete(request):
     products = Product.objects.all()
     if len(Orders.objects.all()) > 0:
@@ -144,6 +151,7 @@ def Delete(request):
         'ol':ol
     })
 
+@login_required
 def Receipt(request):
     orderno = Orders.objects.order_by('-OrderID')[1]
     ol = Orderlines.objects.filter(OrderID=Orders.objects.order_by('-OrderID')[1].pk)
@@ -169,6 +177,7 @@ def Receipt(request):
 
     })
     
+@login_required
 def Log_in(request):
     if(request.method == "POST"):
         un = request.POST.get('username')
@@ -185,7 +194,8 @@ def Log_in(request):
             return redirect('products')
     else:
         return render(request, 'products/Login.html', {})
-    
+
+@login_required    
 def signup(request):
     if(request.method == "POST"):
         form = UserCreationForm(request.POST)
