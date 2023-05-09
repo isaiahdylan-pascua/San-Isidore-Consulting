@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Product List</title>
+    <title>Stock</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -67,21 +67,20 @@
       <div class="row"> 
           <div class="col-7">
               <table class="table table-bordered" id="ptable">
-              <tbody id="products">
+              <tbody id="stocktable">
                   <tr>
                       <th style="width: 6px;">Delete</th>
-                      <th>Item#</th>
+                      <th>Stock#</th>
                       <th>Name</th>
-                      <th>Price</th>
-                      <th>Remaining Stock</th>
+                      <th>Quantity Remaining</th>
                   </tr>
-                  {% for p in products %}
+                  {% for s in stocks %}
                   <tr>
                     <td></td>
-                    <td>{{p.pk}}</td>
-                    <td>{{p.ProductName}}</td>
-                    <td>{{p.ProductCost}}</td>
-                    <td>{{p.ProductStock}}</td>
+                    <td>{{s.pk}}</td>
+                    <td>{{s.Stockname}}</td>
+                    <td>{{s.Stockqty}}</td>
+                    <td></td>
                   </tr>
                   {% endfor %}
               </tbody>
@@ -89,47 +88,16 @@
           </div>
           <div class="col">
             <table class="table table-bordered">
-              <form action="addProduct" method="POST">
+              <form action="Stock" method="POST">
                 {% csrf_token %}
                 <tbody>
-                  <tr>
-                    <th colspan="2">New Product</th>
-                  </tr>
                   <tr>  
                     <th><label for="name">Name</label></th>
                     <th><input style="width:10cm;" type="text" name="name" id="name"/></th>
                   </tr>
                   <tr>
-                    <th><label for="price">Price</label></th>
-                    <th><input style="width:10cm;" type="number" step=any name="price" id="price"/></th>
-                  </tr>
-                  <tr>
-                    <th colspan="2" style="text-align: center; " ><button class="submit" style="width: 4in; ">Submit</button></th>
-                  </tr>
-                </tbody>
-              </form>
-            </table>
-            <table class="table table-bordered">
-              <form action="Stock" method="POST">
-                {% csrf_token %}
-                <tbody>
-                  <tr>
-                    <th colspan="2">Restock</th>
-                  </tr>
-                  <tr>  
-                    <th><label for="name">Name</label></th>
-                    <th>
-                      <select name="Product" id="Product">
-                      <option value="" disabled>Enter Product</option>
-                      {% for p in products %}
-                      <option value="{{p.pk}}">{{p.ProductName}}</option>
-                      {% endfor %}
-                    </select>
-                  </th>
-                  </tr>
-                  <tr>
-                    <th><label for="stock">Quantity</label></th>
-                    <th><input style="width:10cm;" type="number" step=any name="stock" id="stock"/></th>
+                    <th><label for="price">Quantity</label></th>
+                    <th><input style="width:10cm;" type="number" step=any name="qty" id="price"/></th>
                   </tr>
                   <tr>
                     <th colspan="2" style="text-align: center; " ><button class="submit" style="width: 4in; ">Submit</button></th>
@@ -142,13 +110,3 @@
     </div>
   </body>
 </html>
-<!-- References:
-https://getcssscan.com/css-buttons-examples 
-https://stackoverflow.com/questions/14787392/checking-if-condition-for-null
-https://www.youtube.com/watch?v=Y6q8R-9y6a0
-
-
-
-
-
--->

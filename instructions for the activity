@@ -1,0 +1,8 @@
+Good day sir, you may find here the instructions for the Django activity.
+
+1. Initialize VENV and manage.py
+2. Product list may be found in http://localhost:8000/products/
+3. Each inputted item has add-able stock levels
+3. Afterwards, you may click the navbar to navigate to 'Order'
+4. In Order page, inputting a single order of an item subtracts the quantity from the stock levels indicated in the products page. 
+5. Inputting a quantity beyond the stock level amount will result to a message indicating insufficient stocks.

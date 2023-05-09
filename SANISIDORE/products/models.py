@@ -6,6 +6,7 @@ class Product(models.Model):
     ProductID = models.AutoField(primary_key=True) 
     ProductName = models.CharField(max_length=30, null=False, blank=False)
     ProductCost = models.FloatField(max_length=6,null=False, blank=False)
+    ProductStock = models.IntegerField(null=False, blank=False)
     objects = models.Manager()
     
     def getID(self):
@@ -17,8 +18,11 @@ class Product(models.Model):
     def getCost(self):
         return self.ProductCost
 
+    def getStock(self):
+        return self.ProductStock
+
     def __str__(self):
-        return "ProductID: "+str(self.pk) + " Name: " + str(self.ProductName) + " |Php: " +str(self.ProductCost)
+        return "ProductID: "+str(self.pk) + " Name: " + str(self.ProductName) + " |Php: " +str(self.ProductCost) + " |Stock Remaining: " + str(self.ProductStock)
 
 class Orders(models.Model):
     OrderID = models.AutoField(primary_key=True)
@@ -87,3 +91,21 @@ class Orderlines(models.Model):
 
     def __str__(self):
         return "OrderID: " + str(self.OrderID) + " |ProductID: " + str(self.Product) + " |Quantity: " + str(self.ProductQty) + " |Discounted: " + str(self.Discount)
+
+class Stocks(models.Model):
+    StockID = models.AutoField(primary_key=True)
+    Stockname = models.CharField(max_length=30, null=False, blank=False)
+    Stockqty = models.IntegerField(null=False, blank=False)
+    objects = models.Manager()
+
+    def getSID(self):
+        return self.StockID
+
+    def getStockname(self):
+        return self.Stockname
+    
+    def getSQty(self):
+        return self.Stockqty
+
+    def __str__(self):
+        return "ID: " + str(self.StockID) + " Stock: " + str(self.Stockname) + " Amount: " + str(self.Stockqty)

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.core import serializers
-from .models import Product, Orders, Orderlines
+from .models import Product, Orders, Orderlines, Stocks
 from django.contrib import messages
 # from .models import products
 
@@ -23,7 +23,21 @@ def addProduct(request):
         
         new_prod = Product(ProductName=prodname, ProductCost=prodprice)
         new_prod.save()
+
+        # Product.objects.create(ProductName=prodname, ProductCost=prodprice)
     
+    return render(request, "products/ProductListPrototype.html", {'products': products})
+
+def Stock(request):
+    products = Product.objects.all()
+
+    if request.method == "POST":
+        Stockitem = request.POST['Product']
+        Stockqty = request.POST['stock']
+        
+        restock = Product.objects.get(ProductID = Stockitem)
+        restock.ProductStock = Stockqty
+        restock.save()
     return render(request, "products/ProductListPrototype.html", {'products': products})
 
 def displayProduct(request):
@@ -33,13 +47,14 @@ def displayProduct(request):
 def Order(request):
     #List of all products
     products = Product.objects.all()
-    current_order = Orders.objects.order_by('-OrderID')[0]
 
     #If Order list is empty, assign 0 to orderno
     if len(Orders.objects.all()) > 0:
+        current_order = Orders.objects.order_by('-OrderID')[0]
         orderno = current_order.pk
     else:
         orderno = 0
+        current_order = 0
 
     #Orderline with the highest pk, otherwise known as current list of ordered products
     ol = Orderlines.objects.filter(OrderID=orderno)
@@ -76,18 +91,20 @@ def Order(request):
 
 def Orderline(request):
     products = Product.objects.all()
-    current_order = Orders.objects.order_by('-OrderID')[0]
     if len(Orders.objects.all()) > 0:
+        current_order = Orders.objects.order_by('-OrderID')[0]
         orderno = current_order.pk
     else:
         orderno = 0
+        current_order = 0
     ol = Orderlines.objects.filter(OrderID=orderno)
     if request.method == "POST":
         orderid = orderno
         P = request.POST['Product']
-        pqty = request.POST['qty']
+        pqty = int(request.POST['qty'])
         dsc = request.POST['dsc']
         Pdesc = Product.objects.get(ProductID=P).ProductName
+        Pstock = Product.objects.get(ProductID=P).ProductStock
         PCost = int(Product.objects.filter(ProductID=P)[0].ProductCost)
 
         if dsc == 'True':
@@ -95,19 +112,32 @@ def Orderline(request):
         else:
             FP = int(pqty)*PCost
 
-        if len(Orderlines.objects.filter(Product = P, OrderID = orderid)) == 0:
-            new_orderline = Orderlines(OrderID=orderid, Product=P, ProductCost=PCost, ProductQty=pqty, Discount=dsc, ProductDesc=Pdesc, Finalprice=FP)
-            new_orderline.save()
-            return redirect('Order')
+        if (Pstock-pqty) < 0:
+            messages.error(request, 'Insufficient stock')
+
         else:
-            edit_orderline = Orderlines.objects.get(Product = P, OrderID = orderid)
-            edit_orderline.ProductCost = PCost
-            edit_orderline.ProductQty = pqty
-            edit_orderline.Discount = dsc
-            edit_orderline.ProductDesc = Pdesc
-            edit_orderline.Finalprice = FP
-            edit_orderline.save()
-            return redirect('Order')   
+            if len(Orderlines.objects.filter(Product = P, OrderID = orderid)) == 0:
+                new_orderline = Orderlines(OrderID=orderid, Product=P, ProductCost=PCost, ProductQty=pqty, Discount=dsc, ProductDesc=Pdesc, Finalprice=FP)
+                new_orderline.save()
+
+                stockupdate = Product.objects.get(ProductID=P)
+                stockupdate.ProductStock = Pstock - pqty
+                stockupdate.save()
+
+                return redirect('Order')
+            else:
+                edit_orderline = Orderlines.objects.get(Product = P, OrderID = orderid)
+                edit_orderline.ProductCost = PCost
+                edit_orderline.ProductQty = pqty
+                edit_orderline.Discount = dsc
+                edit_orderline.ProductDesc = Pdesc
+                edit_orderline.Finalprice = FP
+                edit_orderline.save()
+
+                stockupdate = Product.objects.get(ProductID=P)
+                stockupdate.ProductStock = Pstock - pqty
+                stockupdate.save()
+                return redirect('Order')   
 
 
         return render(request, "products/Order.html", 
@@ -164,3 +194,14 @@ def Receipt(request):
         'change':change
 
     })
+
+# def Stock(request):
+#     stocks = Stocks.objects.all()
+
+#     if request.method == "POST":
+#         Stockname = request.POST['name']
+#         Stockqty = request.POST['qty']
+        
+#         new_stock = Stocks(Stockname=Stockname, Stockqty=Stockqty)
+#         new_stock.save()
+#     return render(request, "products/Stock.html", {'stocks':stocks})
