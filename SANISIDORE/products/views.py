@@ -20,8 +20,7 @@ def addProduct(request):
     if request.method == "POST":
         prodname = request.POST['name']
         prodprice = request.POST['price']
-        
-        new_prod = Product(ProductName=prodname, ProductCost=prodprice)
+        new_prod = Product(ProductName=prodname, ProductCost=prodprice, ProductStock=0)
         new_prod.save()
 
         # Product.objects.create(ProductName=prodname, ProductCost=prodprice)
@@ -53,6 +52,8 @@ def Order(request):
         current_order = Orders.objects.order_by('-OrderID')[0]
         orderno = current_order.pk
     else:
+        new_order = Orders()
+        new_order.save()
         orderno = 0
         current_order = 0
 
@@ -195,7 +196,7 @@ def Receipt(request):
 
     })
 
-# def Stock(request):
+# def Salesreport(request):
 #     stocks = Stocks.objects.all()
 
 #     if request.method == "POST":
@@ -204,4 +205,4 @@ def Receipt(request):
         
 #         new_stock = Stocks(Stockname=Stockname, Stockqty=Stockqty)
 #         new_stock.save()
-#     return render(request, "products/Stock.html", {'stocks':stocks})
+#     return render(request, "products/Salesreport.html", {'stocks':stocks})

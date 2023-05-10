@@ -74,6 +74,9 @@
         -webkit-user-select: none;
         touch-action: manipulation;
       }
+      .RetrievedOrders tr{
+        background-color: #A2F7AE;
+      }
     </style>
   </head>
   <body style="background-color: #2b9736;">
@@ -189,20 +192,20 @@
               <th>Adjusted Price</th>
             </tr>
           {% for ol in ol %}
-            <tr>
-              <th>
+            <tr class="RetrievedOrders">
+              <th style="background-color: #A2F7AE;">
                 <form action="Delete" method="POST">
                   {% csrf_token %}
                 <!-- <button type="submit" class="btn btn-danger" name="Product" value={{ol.Product}}>X</button> -->
                 <input class="btn btn-default btn-danger" name="delete" type="submit" value="{{ol.Product}}"/>
               </th>
             </form>
-              <th>{{ol.Product}}</th>
-              <th>{{ol.ProductDesc}}</th>
-              <th>{{ol.ProductQty}}</th>
-              <th>{{ol.ProductCost}}</th>
-              <th>{{ol.Discount}}</th>
-              <th>{{ol.Finalprice}}</th>
+              <th style="background-color: #A2F7AE;">{{ol.Product}}</th>
+              <th style="background-color: #A2F7AE;">{{ol.ProductDesc}}</th>
+              <th style="background-color: #A2F7AE;">{{ol.ProductQty}}</th>
+              <th style="background-color: #A2F7AE;">{{ol.ProductCost}}</th>
+              <th style="background-color: #A2F7AE;">{{ol.Discount}}</th>
+              <th style="background-color: #A2F7AE;">{{ol.Finalprice}}</th>
             </tr>
             {% endfor %}
           </table>

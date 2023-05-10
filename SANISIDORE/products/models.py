@@ -26,7 +26,7 @@ class Product(models.Model):
 
 class Orders(models.Model):
     OrderID = models.AutoField(primary_key=True)
-    Date = models.DateField(auto_now=True)
+    Date = models.DateTimeField(auto_now=True)
     Server = models.CharField(max_length=30, blank=False)
     Table = models.CharField(max_length=30, blank=False)
     PaymentOption = models.CharField(max_length=30, blank=False)

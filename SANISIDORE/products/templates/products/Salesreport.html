@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+      .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, 
+      .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+    border: 1px solid black; 
+    background-color: #50AF4F;
+    color: white;
+}
+      .textboxclass{
+        width: 500px;
+      }
+
+      .BG{
+        width: 1cm;
+      }
+      .currentpage{
+        background-color: #F9F850;
+      }
+      th{
+        text-align: center;
+      }
+      /* CSS */
+      .submit {
+        background-color: #fff000;
+        border-radius: 12px;
+        color: #000;
+        cursor: pointer;
+        font-weight: bold;
+        padding: 10px 15px;
+        text-align: center;
+        transition: 200ms;
+        width: 100%;
+        box-sizing: border-box;
+        border: 0;
+        font-size: 16px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+      }
+    </style>
+  </head>
+  <body style="background-color: #2b9736;">
+    <div class="container-fluid">
+      <div class="row">
+        <table class="table table-bordered">
+          <tbody>
+            <tr id="head">
+              <th style="width: 1in; text-align: center;"><img class="BG" src="" alt="BG"></th>
+              <th>Orders</th>
+              <th style="background-color: #F9F850; color:black;">Products</th>
+              <th>Sales Report</th>
+              <th>Customers</th>
+              <th>Log Off</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="container-fluid"> 
+        <div class="row">
+
+          <!-- Table for Date configuration -->
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Daily</th>
+                <th>Monthly</th>
+                <th>Yearly</th>
+                <th>Print</th>
+              </tr>
+            </thead>
+          </table>
+          <!-- Table for Date configuration -->
+          
+          <!-- Table for Generated Orders -->
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Order No#</th>
+                <th>Time</th>
+                <th>Table</th>
+                <th>Server</th>
+                <th>Net Earning</th>
+              </tr>
+            </thead>
+          </table>
+          <!-- Table for Generated Orders -->
+
+        </div>
+      </div>
+      
+    
+    </div>
+  </body>
+</html>
+<!-- References:
+https://getcssscan.com/css-buttons-examples 
+https://stackoverflow.com/questions/14787392/checking-if-condition-for-null
+https://www.youtube.com/watch?v=Y6q8R-9y6a0
+
+
+
+
+
+-->
