@@ -1,53 +1,42 @@
-<!DOCTYPE html>
 <html>
-<head>
-  <!-- Add Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <style>
-    .navbar-custom {
-      background-color: #50AF4F;
-    }
+ <head> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <style id="compiled-css" type="text/css">
+table {
+   border-collapse:collapse;
+}
 
-    .navbar-custom .navbar-nav .nav-link {
-      color: #fff;
-      font-size: 18px; /* Adjust the font size as needed */
-    }
+tr, td {
+   border:2px solid;
+}
 
-    .navbar-custom .navbar-nav .nav-item:not(:last-child) .nav-link {
-      border-right: 1px solid rgba(255, 255, 255, 0.5);
-      padding-right: 10px; /* Adjust the padding as needed */
-    }
-  </style>
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-    <a class="navbar-brand" href="#">My Website</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Orders</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sales Report</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Log Off</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+tr {
+   height:auto;
+   text-align:center;
+   margin:0;
+   padding:0;
+}
 
-  <!-- Add Bootstrap JS (required for navbar toggling) -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-</body>
+td {
+   padding:0px;
+}
+
+input, select {
+   margin:0;
+   padding:0;
+   height:100%;
+   width:100%;
+}
+</style> 
+ </head> 
+ <body> 
+  <table> 
+   <tbody> 
+    <tr> 
+     <td> <select> <option>Lorem i</option> <option>Lorem i</option> </select> </td> 
+     <td> <input type="button" value="test"> </td> 
+    </tr> 
+   </tbody> 
+  </table>  
+ </body>
 </html>

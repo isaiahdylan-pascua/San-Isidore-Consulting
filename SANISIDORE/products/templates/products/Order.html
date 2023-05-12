@@ -12,35 +12,32 @@
               </ul>
               {% endif %}
           <table class="table table-bordered"  id="order">
-            <tr>
               <form action="Order" method="POST">
                 {% csrf_token %}
-              <th colspan="3"></th>
-              <th>
-                <button type="submit" class="btn btn-warning">Generate Receipt</button>
-                <br>
-                <input type="number" name="tendered"></th>
-              <th>Order No.:</th>
-              <th style="font-size: 0.5in;">#{{orderno}}</th>
-            </tr>
-
             <tr>
-              <th>Date</th>
-              <th>{{ current_order.Date }}</th>
-              <th><label for="table">Table</label></th>
+              <th style="font-size: 0.5in;">#{{orderno}}</th>
               <th>
-                <select class="" name="table" id="table">
+                <select name="table" id="table">
                   <option value="" disabled selected>Table No.</option>
                   <option value="1">Table 1</option>
                   <option value="2">Table 2</option>
                   <option value="3">Table 3</option>
                 </select>
-              </th>
-              <th>Client</th>
-              <th></th>
+                <th>
+                  <select name="pwds" id="pwds">
+                    <option value="" disabled selected>PWD/Senior</option>
+                    <option value="False">None</option>
+                    <option value="True">Senior</option>
+                    <option value="True">PWD</option>
+                  </select>
+                </th>
             </tr>
             <tr>
-              <th><label for="PO">Payment Option</label></th>
+              <th>
+                <button type="submit" >Generate Receipt</button>
+                <br>
+                <input placeholder="Tendered Amount" type="number" name="tendered">
+              </th>
               <th>
                 <select name="PO" id="PO" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                   <option value="" disabled selected>Enter Mode of Payment</option>
@@ -49,7 +46,6 @@
                   <option value="CD">Credit/Debit Card</option>
                 </select>
               </th>
-              <th><label for="server">Server</label></th>
               <th>
                 <select name="server" id="server">
                   <option value="" disabled selected>Server Name</option>
@@ -58,25 +54,17 @@
                   <option value="Mica">Mica</option>
                 </select>
               </th>
-              <th><label for="pwds">PWD / Senior</label></th>
-              <th>
-                <select name="pwds" id="pwds">
-                  <option value="False">None</option>
-                  <option value="True">Senior</option>
-                  <option value="True">PWD</option>
-                </select>
-              </th>
             </tr>
           </table>
         </form>
           <table class="table table-bordered" id="ordered">
             <tr>
-              <td colspan="7"><button class="btn btn-warning" onclick="openForm()">Add Item</button></td>
+              <td colspan="7"><button onclick="toggle()">Add Item</button></td>
 
             </tr>
             <tr>
-              <th>Delete</th>
-              <th>Product #</th>
+              <th class="delete-text">Delete</th>
+              <th style="color: #FFF851">Product #</th>
               <th>Description</th>
               <th>Qty</th>
               <th>Price/Qty</th>
@@ -85,30 +73,30 @@
             </tr>
           {% for ol in ol %}
             <tr class="RetrievedOrders">
-              <th style="background-color: #A2F7AE;">
+              <th>
                 <form action="Delete" method="POST">
                   {% csrf_token %}
-                <!-- <button type="submit" class="btn btn-danger" name="Product" value={{ol.Product}}>X</button> -->
-                <input class="btn btn-default btn-danger" name="delete" type="submit" value="{{ol.Product}}"/>
+                <button type="submit" class="delete" name="delete" value={{ol.Product}}>Delete</button>
+                <!-- <input class="delete" name="delete" type="submit" value="{{ol.Product}}"/> -->
               </th>
             </form>
-              <th style="background-color: #A2F7AE;">{{ol.Product}}</th>
-              <th style="background-color: #A2F7AE;">{{ol.ProductDesc}}</th>
-              <th style="background-color: #A2F7AE;">{{ol.ProductQty}}</th>
-              <th style="background-color: #A2F7AE;">{{ol.ProductCost}}</th>
-              <th style="background-color: #A2F7AE;">{{ol.Discount}}</th>
-              <th style="background-color: #A2F7AE;">{{ol.Finalprice}}</th>
+              <th style="color: #FFF851">{{ol.Product}}</th>
+              <th>{{ol.ProductDesc}}</th>
+              <th>{{ol.ProductQty}}</th>
+              <th>{{ol.ProductCost}}</th>
+              <th>{{ol.Discount}}</th>
+              <th style="text-decoration:underline;">{{ol.Finalprice}}</th>
             </tr>
             {% endfor %}
           </table>
         </div>
       </div>
     </div>
-    <div class="form-popup" id="myForm">
+    <div class="form-popup" id="AddItem">
       <form action="Orderline" method="POST" class="form-container" >
         {% csrf_token %}
       <table>
-        <th>Add Item / Edit Item</th>
+        <th colspan="2">Add Item / Edit Item</th>
     
       <tr>
         <td><label for="Product"><b>Product</b></label></td>
@@ -136,15 +124,9 @@
             <option value="False">No</option>
         </td>
       </tr>
-
       <tr>
-        <td>Price</td>
-        <td></td>
-      </tr>
-
-      <tr>
-        <td><button type="submit" class="btn btn-warning">Add order</button></td>
-        <td><button type="button" class="btn btn-warning" onclick="closeForm()">Cancel</button></td>
+        <td colspan="2"><button type="submit">Add order</button></td>
+        <!-- <td><button type="button" onclick="closeForm()">Cancel</button></td> -->
         <td></td>
       </tr>
         
@@ -153,12 +135,26 @@
     </div>
     
     <script>
-    function openForm() {
-      document.getElementById("myForm").style.display = "block";
-    }
+    // function openForm() {
+    //   document.getElementById("AddItem").style.display = "block";
+    // }
     
-    function closeForm() {
-      document.getElementById("myForm").style.display = "none";
+    // function closeForm() {
+    //   document.getElementById("AddItem").style.display = "none";
+    // }
+
+    function toggle()
+    {
+    debugger;
+    var e = document.getElementById("AddItem");
+    if (e.style.display == 'block' || e.style.display =='')
+    {
+        e.style.display = 'none';
+    }
+    else 
+    {
+        e.style.display = 'block';
+    }
     }
     </script>
       {% endblock %}
