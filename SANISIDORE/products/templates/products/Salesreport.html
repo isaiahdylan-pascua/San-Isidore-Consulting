@@ -14,6 +14,25 @@
     background-color: #50AF4F;
     color: white;
 }
+.dropdown {
+  min-width: 2in;
+  appearance: none; /* Remove default arrow */
+  padding: 8px 16px; /* Adjust padding as needed */
+  font-size: 14px; /* Adjust font size as needed */
+  border: 1px solid #ccc; /* Add border */
+  background-color: #fff; /* Set background color */
+  color: #333; /* Set text color */
+}
+
+.dropdown:hover {
+  border-color: #888; /* Add hover border color */
+}
+
+.dropdown:focus {
+  outline: none; /* Remove focus outline */
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3); /* Add focus shadow */
+}
+
       .textboxclass{
         width: 500px;
       }
@@ -63,7 +82,6 @@
           </tbody>
         </table>
       </div>
-      
       <div class="container-fluid"> 
         <div class="row">
 
@@ -71,15 +89,49 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th>Daily</th>
-                <th>Monthly</th>
-                <th>Yearly</th>
-                <th>Print</th>
+                <!-- Day function -->
+                <form action="Salesreport" method="POST">
+                  {% csrf_token %}
+                <th>
+                  <select class="dropdown" name="Daily" id="Daily">
+                    <option value="0">Day</option>
+                    {% for x in Days %}
+                    <option value="{{x}}">{{x}}</option>
+                    {% endfor %}
+                  </select>
+                </th>
+
+              <!-- Month function -->
+              
+                <th>
+                  <select class="dropdown" name="Monthly" id="Monthly">
+                    <option value="0">Month</option>
+                    {% for x in Months %}
+                    <option value="{{x}}">{{x}}</option>
+                    {% endfor %}
+                  </select>
+                </th>
+
+
+              <!-- Year function -->
+                <th>
+                  <select class="dropdown" name="Yearly" id="Yearly">
+                    <option value="0">Year</option>
+                    {% for x in Years %}
+                    <option value="{{x}}">{{x}}</option>
+                    {% endfor %}
+                  </select>
+                </th>
+                <th><button class="submit"">Sort and Display</button> <br></th>
+              </form>
+              
               </tr>
             </thead>
           </table>
           <!-- Table for Date configuration -->
-          
+          {% for m in messages %}
+          {{m}}
+          {% endfor %}
           <!-- Table for Generated Orders -->
           <table class="table table-bordered">
             <thead>
@@ -90,6 +142,15 @@
                 <th>Server</th>
                 <th>Net Earning</th>
               </tr>
+              {% for x in O %}
+              <tr>
+                <td>{{x.pk}}</td>
+                <td>{{x.Date}}</td>
+                <td>{{x.Table}}</td>
+                <td>{{x.Server}}</td>
+                <td>{{x.OrderTotal}}</td>
+              </tr>
+              {% endfor %}
             </thead>
           </table>
           <!-- Table for Generated Orders -->

@@ -1,102 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Order</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <style>
-      .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, 
-      .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
-    border: 1px solid black;   
-    background-color: #50AF4F;
-    color: white;
-}
-      .form-popup {
-        color: white;
-        display: none;
-        position: fixed;
-        bottom: 0;
-        right: 15px;
-        border: 3px solid #FAF850;
-        z-index: 9;
-      }
-      
-      /* Add styles to the form container */
-      .form-container {
-        max-width: 300px;
-        padding: 10px;
-        background-color: #50AF4F;
-      }
-      
-      /* Full-width input fields */
-      .form-container input[type=text], .form-container input[type=password] {
-        width: 100%;
-        padding: 15px;
-        margin: 5px 0 22px 0;
-        border: none;
-        background: #f1f1f1;
-      }
-    #order{
-    table-layout: fixed;
-    width: 100%;
-}
-      .textboxclass{
-        width: 500px;
-      }
-
-      .BG{
-        width: 1cm;
-      }
-      .currentpage{
-        background-color: #F9F850;
-      }
-      th{
-        text-align: center;
-      }
-      /* CSS */
-      .submit {
-        background-color: #fff000;
-        border-radius: 12px;
-        color: #000;
-        cursor: pointer;
-        font-weight: bold;
-        padding: 10px 15px;
-        text-align: center;
-        transition: 200ms;
-        width: 100%;
-        box-sizing: border-box;
-        border: 0;
-        font-size: 16px;
-        user-select: none;
-        -webkit-user-select: none;
-        touch-action: manipulation;
-      }
-      .RetrievedOrders tr{
-        background-color: #A2F7AE;
-      }
-    </style>
-  </head>
-  <body style="background-color: #2b9736;">
-    {% load static %}
-    <div class="container-fluid">
-      <div class="row">
-        <table class="table table-bordered">
-          <tbody>
-            <tr id="head">
-              <th style="width: 1in; text-align: center;"><img class="BG" src="{% static 'Images/BG.png' %}" alt="BG"></th>
-              <th style="background-color: #F9F850; color:black;">Orders</th>
-              <th><a style="color: rgb(255, 255, 255);" href="{% url 'products' %}">Products</a></th>
-              <th>Sales Report</th>
-              <th>Customers</th>
-              <th>Log Off</th>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
+{% extends 'products/index.html' %}
+{% load static %}
+    {% block content %}
       <div class="row">
         <div class="col">
           {% csrf_token %}
@@ -109,17 +13,13 @@
               {% endif %}
           <table class="table table-bordered"  id="order">
             <tr>
-              <!-- <th>Cancel</th> -->
-              <!-- <form action="Receipt" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="Receipt" value="{{ request.GET.Receipt }}">
-              <th><button type="submit" class="btn btn-warning">Generate Receipt</button></th>
-            </form> -->
-
               <form action="Order" method="POST">
                 {% csrf_token %}
-              <th colspan="3"><button type="submit" class="btn btn-warning">Generate Receipt and Pay:</button></th>
-              <th><input type="number" name="tendered"></th>
+              <th colspan="3"></th>
+              <th>
+                <button type="submit" class="btn btn-warning">Generate Receipt</button>
+                <br>
+                <input type="number" name="tendered"></th>
               <th>Order No.:</th>
               <th style="font-size: 0.5in;">#{{orderno}}</th>
             </tr>
@@ -129,7 +29,7 @@
               <th>{{ current_order.Date }}</th>
               <th><label for="table">Table</label></th>
               <th>
-                <select name="table" id="table">
+                <select class="" name="table" id="table">
                   <option value="" disabled selected>Table No.</option>
                   <option value="1">Table 1</option>
                   <option value="2">Table 2</option>
@@ -169,14 +69,6 @@
             </tr>
           </table>
         </form>
-
-
-
-
-
-
-
-        
           <table class="table table-bordered" id="ordered">
             <tr>
               <td colspan="7"><button class="btn btn-warning" onclick="openForm()">Add Item</button></td>
@@ -212,13 +104,6 @@
         </div>
       </div>
     </div>
-
-
-
-
-
-
-
     <div class="form-popup" id="myForm">
       <form action="Orderline" method="POST" class="form-container" >
         {% csrf_token %}
@@ -276,20 +161,4 @@
       document.getElementById("myForm").style.display = "none";
     }
     </script>
-</body>
-      </head>
-      <body>
-
-      
-  </body>
-</html>
-<!-- References:
-https://getcssscan.com/css-buttons-examples 
-https://stackoverflow.com/questions/14787392/checking-if-condition-for-null
-https://www.youtube.com/watch?v=Y6q8R-9y6a0
-
-
-
-
-
--->
+      {% endblock %}

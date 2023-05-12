@@ -6,7 +6,7 @@ class Product(models.Model):
     ProductID = models.AutoField(primary_key=True) 
     ProductName = models.CharField(max_length=30, null=False, blank=False)
     ProductCost = models.FloatField(max_length=6,null=False, blank=False)
-    ProductStock = models.IntegerField(null=False, blank=False)
+    ProductStock = models.IntegerField(null=False   , blank=False)
     objects = models.Manager()
     
     def getID(self):
@@ -26,12 +26,13 @@ class Product(models.Model):
 
 class Orders(models.Model):
     OrderID = models.AutoField(primary_key=True)
-    Date = models.DateTimeField(auto_now=True)
+    Date = models.DateTimeField(auto_now=False, null=True)
     Server = models.CharField(max_length=30, blank=False)
     Table = models.CharField(max_length=30, blank=False)
     PaymentOption = models.CharField(max_length=30, blank=False)
     PWDS = models.CharField(max_length=30, blank=False)
     Tendered = models.FloatField(null=True)
+    OrderTotal = models.FloatField(null=True)
     objects = models.Manager()
 
     def getID(self):
@@ -57,14 +58,6 @@ class Orders(models.Model):
 
     def __str__(self):
         return "OrderID: "+str(self.pk) + " |Y-M-D: " + str(self.Date) + " |Server: " +str(self.Server) + " |Table No.: " + str(self.Table) + " |Paid: " + str(self.Tendered) + " via " + str(self.PaymentOption) + str(self.PWDS)
-
-
-# class Orderlines(models.Model):
-#     OrderID = models.ForeignKey('Orders',on_delete=models.CASCADE)
-#     ProductID = models.ForeignKey('Product',on_delete=models.CASCADE)
-#     ProductQty = models.IntegerField(null=False, blank=False)
-#     Discount = models.BooleanField()
-#     objects = models.Manager()
 
 
 class Orderlines(models.Model):

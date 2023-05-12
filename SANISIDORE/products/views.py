@@ -4,6 +4,7 @@ from django.template import loader
 from django.core import serializers
 from .models import Product, Orders, Orderlines, Stocks
 from django.contrib import messages
+from django.utils import timezone
 # from .models import products
 
 
@@ -183,6 +184,11 @@ def Receipt(request):
         pwds = subtotal*.2
     
     total = subtotal - pwds
+
+    orderno.OrderTotal = total
+    orderno.Date = timezone.now()
+    orderno.save()
+
     
     change = orderno.Tendered - total
     return render(request, "products/Receipt.html", 
@@ -196,13 +202,36 @@ def Receipt(request):
 
     })
 
-# def Salesreport(request):
-#     stocks = Stocks.objects.all()
+def Salesreport(request):
+    O = Orders.objects.all()
+    if request.method == "POST":
+        # Orders = Orders.objects.all()
+        Day = request.POST['Daily']
+        Month = request.POST['Monthly']
+        Year = request.POST['Yearly']
+        if Day == "0" and Month == "0":
+            O = Orders.objects.filter(Date__year = Year)
+            messages.info(request, 'Sales Record as of ' + Year)
+        elif Day == "0":
+            O = Orders.objects.filter(Date__month = Month, Date__year = Year)
+            messages.info(request, 'Sales Record as of ' + Month + '-' + Year)
+        else: 
+            O = Orders.objects.filter(Date__day = Day, Date__month = Month, Date__year = Year)
+            messages.info(request, 'Sales Record as of ' + Day + '-' + Month + '-' + Year)
+        # return redirect('Salesreport')
 
-#     if request.method == "POST":
-#         Stockname = request.POST['name']
-#         Stockqty = request.POST['qty']
-        
-#         new_stock = Stocks(Stockname=Stockname, Stockqty=Stockqty)
-#         new_stock.save()
-#     return render(request, "products/Salesreport.html", {'stocks':stocks})
+
+
+    return render(request, "products/Salesreport.html", 
+    {
+    'Days':range(1, 32),
+    # 'Months':['-', 'January', 'February','March','April','May','June','July','August','September','October','November','December'], 
+    'Months':range(1,13),
+    'Years':range(2000, 2051),
+    'O':O
+    }
+     
+    )
+
+def Index(request):
+    return render(request, "products/Index.html")
