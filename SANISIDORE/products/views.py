@@ -46,6 +46,7 @@ def displayProduct(request):
     return render(request, "products/test.html", {'products': products})
 
 def Order(request):
+
     #List of all products
     products = Product.objects.all()
 
@@ -61,6 +62,7 @@ def Order(request):
 
     #Orderline with the highest pk, otherwise known as current list of ordered products
     ol = Orderlines.objects.filter(OrderID=orderno)
+    ol_no = len(ol)
 
     if request.method == "POST":
         server = request.POST['server']
@@ -89,7 +91,8 @@ def Order(request):
     {'orderno': orderno, 
     'current_order':current_order,
     'products': products, 
-    'ol':ol
+    'ol':ol,
+    'ol_no':ol_no
     })
 
 def Orderline(request):
@@ -213,7 +216,9 @@ def Receipt(request):
     })
 
 def Salesreport(request):
-    O = Orders.objects.all()
+    O = Orders.objects.latest('OrderID')
+    O = Orders.objects.exclude(OrderID=O.OrderID)
+    # O = O[len(O)-1]
     if request.method == "POST":
         # Orders = Orders.objects.all()
         Day = request.POST['Daily']

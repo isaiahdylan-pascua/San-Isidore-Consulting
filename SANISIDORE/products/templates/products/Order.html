@@ -31,15 +31,20 @@
                     <option value="True">PWD</option>
                   </select>
                 </th>
+                <th>
+                  <select name="ol_no" id="ol_no">
+                    <option value="{{ol_no}}" disabled selected>Orderline number</option>
+                  </select>
+                </th>
             </tr>
             <tr>
               <th>
-                <button class="critical" type="submit" >Generate Receipt</button>
+                <button class="critical" type="submit" id="generatereceipt" disabled>Generate Receipt</button>
                 <br>
-                <input placeholder="Tendered Amount" type="number" name="tendered">
+                <input pattern="[0-9]+" placeholder="Tendered Amount" type="text" name="tendered" id="tendered">
               </th>
               <th>
-                <select name="PO" id="PO" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <select name="PO" id="PO">
                   <option value="" disabled selected>Enter Mode of Payment</option>
                   <option value="Cash">Cash</option>
                   <option value="GCASH">GCASH</option>
@@ -133,15 +138,36 @@
     </table>
   </form>
     </div>
-    
     <script>
-    // function openForm() {
-    //   document.getElementById("AddItem").style.display = "block";
-    // }
+    const Table = document.getElementById("table");
+    const PO = document.getElementById("PO");
+    const PWDS = document.getElementById("pwds");
+    const Server = document.getElementById("server");
+    const Tendered = document.getElementById("tendered");
+    var Orderline = {{ ol_no }};
+
+    console.log(Orderline>0)
+
+    function checkFormValidity() {
+      if (Table.value && PO.value && PWDS.value && Server.value && Tendered.value && Orderline>0==true) 
+      // && Orderline>0==true)
+      // if (Orderline>0)
+      {
+        generatereceipt.disabled = false;
+      } 
+      else
+      {
+        generatereceipt.disabled = true;
+      }
     
-    // function closeForm() {
-    //   document.getElementById("AddItem").style.display = "none";
-    // }
+    }
+    Table.addEventListener("change", checkFormValidity);
+    PO.addEventListener("change", checkFormValidity);
+    PWDS.addEventListener("change", checkFormValidity);
+    Server.addEventListener("change", checkFormValidity);
+    Tendered.addEventListener("change", checkFormValidity);
+    // Orderline.addEventListener("change", checkFormValidity);
+    
 
     function toggle()
     {
@@ -157,4 +183,5 @@
     }
     }
     </script>
-      {% endblock %}
+      
+  {% endblock %}
