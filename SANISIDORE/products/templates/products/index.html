@@ -8,6 +8,7 @@
     </title>
     {% endblock %}
   <!-- Add Bootstrap CSS -->
+  <link rel="icon" type="image/png" href="{% static 'Images/BG.png' %}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <style>
     .box {
@@ -38,8 +39,58 @@ button {
   appearance: button;
   outline: none;
 }
+h1{
+  background-color: #F7C045;
+  color: white;
+  padding: 12px;
+  height: 100%;
+  width: 100%;
+  border: none;
+  font-size: 20px;
+  box-shadow: -1px 2px 57px 20px rgba(255,246,81,0.36);
+-webkit-box-shadow: -1px 2px 57px 20px rgba(255,246,81,0.36);
+-moz-box-shadow: -1px 2px 57px 20px rgba(255,246,81,0.36);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
 
-
+#rec{
+        font-family:Verdana, Tahoma, sans-serif ;
+        font-size: 10px;
+        font-weight: normal;
+        background-color: #ffffff;
+        /* background-image: url('{% static "Images/receipt.png"%}'); */
+        color: rgb(48, 48, 48);
+        margin-left: 0cm;
+        margin-right:20cm;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2cm;
+        text-align: center;
+    }
+    #rec td{
+      padding-left: 10px;
+    }
+    #Rpic{
+      filter: grayscale(100%);
+      width: 1.5in;
+    }
+.critical{
+  background-color: #FAF850;
+  color: black  ;
+  padding: 12px;
+  height: 100%;
+  width: 100%;
+  border: none;
+  font-size: 20px;
+  box-shadow: -1px 2px 57px 20px rgba(255,246,81,0.36);
+-webkit-box-shadow: -1px 2px 57px 20px rgba(255,246,81,0.36);
+-moz-box-shadow: -1px 2px 57px 20px rgba(255,246,81,0.36);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
 select {
   background-color: #50AF4F;
   color: white;

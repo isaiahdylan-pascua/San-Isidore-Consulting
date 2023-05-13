@@ -5,7 +5,7 @@ from django.db import models
 class Product(models.Model):
     ProductID = models.AutoField(primary_key=True) 
     ProductName = models.CharField(max_length=30, null=False, blank=False)
-    ProductCost = models.FloatField(max_length=6,null=False, blank=False)
+    ProductCost = models.DecimalField(max_digits=10,null=False, blank=False, decimal_places=2)
     ProductStock = models.IntegerField(null=False   , blank=False)
     objects = models.Manager()
     
@@ -31,8 +31,8 @@ class Orders(models.Model):
     Table = models.CharField(max_length=30, blank=False)
     PaymentOption = models.CharField(max_length=30, blank=False)
     PWDS = models.CharField(max_length=30, blank=False)
-    Tendered = models.FloatField(null=True)
-    OrderTotal = models.FloatField(null=True)
+    Tendered = models.DecimalField(max_digits=10, null=True, decimal_places=2)
+    OrderTotal = models.DecimalField(max_digits=10, null=True, decimal_places=2)
     objects = models.Manager()
 
     def getID(self):
@@ -63,11 +63,11 @@ class Orders(models.Model):
 class Orderlines(models.Model):
     OrderID = models.IntegerField(null=False, blank=False)
     Product = models.IntegerField(null=False, blank=False)
-    ProductCost = models.FloatField()
+    ProductCost = models.DecimalField(max_digits=10, decimal_places=2)
     ProductDesc = models.CharField(max_length=30, blank=True)
     ProductQty = models.IntegerField(null=False, blank=False)
     Discount = models.CharField(max_length=30, blank=True)
-    Finalprice = models.FloatField()
+    Finalprice = models.DecimalField(max_digits=10, decimal_places=2)
     objects = models.Manager()
     
     def getOID(self):

@@ -5,6 +5,7 @@ from django.core import serializers
 from .models import Product, Orders, Orderlines, Stocks
 from django.contrib import messages
 from django.utils import timezone
+from decimal import Decimal
 # from .models import products
 
 
@@ -172,6 +173,15 @@ def Delete(request):
         'ol':ol
     })
 
+def DeleteProduct(request):
+    if request.method == "POST":
+        PID = request.POST['delete']
+        deleteproduct = Product.objects.get(ProductID=PID)
+        deleteproduct.delete()
+        return redirect('products')
+
+    return render(request, "products/ProductListPrototype.html",)
+
 def Receipt(request):
     orderno = Orders.objects.order_by('-OrderID')[1]
     ol = Orderlines.objects.filter(OrderID=Orders.objects.order_by('-OrderID')[1].pk)
@@ -181,7 +191,7 @@ def Receipt(request):
         subtotal = subtotal + x.Finalprice
     
     if orderno.PWDS == 'True':
-        pwds = subtotal*.2
+        pwds = Decimal(subtotal)*Decimal(.2)
     
     total = subtotal - pwds
 

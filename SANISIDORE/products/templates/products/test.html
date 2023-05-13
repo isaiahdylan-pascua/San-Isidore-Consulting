@@ -1,42 +1,32 @@
 <html>
- <head> 
-  <meta name="viewport" content="width=device-width, initial-scale=1"> 
-  <style id="compiled-css" type="text/css">
-table {
-   border-collapse:collapse;
-}
+   {% load static %}
 
-tr, td {
-   border:2px solid;
-}
-
-tr {
-   height:auto;
-   text-align:center;
-   margin:0;
-   padding:0;
-}
-
-td {
-   padding:0px;
-}
-
-input, select {
-   margin:0;
-   padding:0;
-   height:100%;
-   width:100%;
-}
-</style> 
- </head> 
- <body> 
-  <table> 
-   <tbody> 
-    <tr> 
-     <td> <select> <option>Lorem i</option> <option>Lorem i</option> </select> </td> 
-     <td> <input type="button" value="test"> </td> 
-    </tr> 
-   </tbody> 
-  </table>  
- </body>
+   <!-- Include jQuery library -->
+   <script src="{% static 'jquery.min.js' %}"></script>
+   
+   <!-- Confirmation popup box script -->
+   <script>
+       $(document).ready(function () {
+           // Attach click event handler to the button
+           $('#confirmButton').on('click', function () {
+               // Show the confirmation popup box
+               if (confirm('Are you sure you want to proceed?')) {
+                   // If 'confirm' is clicked, submit the form
+                   $('#myForm').submit();
+               } else {
+                   // If 'cancel' is clicked, do nothing
+                   return false;
+               }
+           });
+       });
+   </script>
+   
+   <form id="myForm" method="POST" action="{% url 'your_view_name' %}">
+       {% csrf_token %}
+       
+       <!-- Your form fields here -->
+       
+       <!-- Button that triggers the confirmation popup -->
+       <button id="confirmButton" type="button">Submit</button>
+   </form>
 </html>
