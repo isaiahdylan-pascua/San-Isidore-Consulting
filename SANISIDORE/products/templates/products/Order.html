@@ -1,16 +1,28 @@
 {% extends 'products/index.html' %}
 {% load static %}
+
+{% block title %}
+<title>Orders</title>
+{% endblock %}
     {% block content %}
       <div class="row">
         <div class="col">
           {% csrf_token %}
-          {% if messages %}
+          <!-- {% if messages %}
+          <h1{% if message.tags %} class="{{ message.tags }}"{% endif %}>
               <ul class="messages">
                   {% for message in messages %}
-                  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                  {{ message }}
                   {% endfor %}
-              </ul>
-              {% endif %}
+            </h1>
+              {% endif %} -->
+              <select name="ol_no" class="hidden" id="ol_no">
+                <option value="{{ol_no}}" disabled selected></option>
+              </select>
+
+              <select name="subtotal" class="hidden" id="subtotal">
+                <option value="{{subtotal}}" disabled selected></option>
+              </select>
           <table class="table table-bordered"  id="order">
               <form action="Order" method="POST">
                 {% csrf_token %}
@@ -29,11 +41,6 @@
                     <option value="False">None</option>
                     <option value="True">Senior</option>
                     <option value="True">PWD</option>
-                  </select>
-                </th>
-                <th>
-                  <select name="ol_no" id="ol_no">
-                    <option value="{{ol_no}}" disabled selected>Orderline number</option>
                   </select>
                 </th>
             </tr>
@@ -61,6 +68,14 @@
               </th>
             </tr>
           </table>
+          {% if messages %}
+          <h1{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+              <ul class="messages">
+                  {% for message in messages %}
+                  {{ message }}
+                  {% endfor %}
+            </h1>
+              {% endif %}
         </form>
           <table class="table table-bordered" id="ordered">
             <tr>
@@ -117,14 +132,14 @@
       
       <tr>
         <td><label for="qty"><b>Quantity</b></label></td>
-        <td><input type="number" placeholder="Enter Amount" name="qty" required></td>
+        <td><input pattern="[0-9]+" type="text" placeholder="Enter Amount" name="qty" required></td>
       </tr>
 
       <tr>
         <td><label for="dsc"><b>Discount</b></label></td>
         <td>
           <select name="dsc" id="dsc">
-            <option value=""></option>
+            <option value="" disabled selected>Loyalty Sticker</option>
             <option value="True">Yes</option>
             <option value="False">No</option>
         </td>
@@ -143,15 +158,38 @@
     const PO = document.getElementById("PO");
     const PWDS = document.getElementById("pwds");
     const Server = document.getElementById("server");
-    const Tendered = document.getElementById("tendered");
-    var Orderline = {{ ol_no }};
+    const Orderline = document.getElementById("ol_no");
+    const Subtotal = document.getElementById("subtotal");
+    // var Tendered = document.getElementById("tendered");
+    var Tendered = document.getElementById('tendered');
+  
+  Tendered.addEventListener('input', function() {
+    // Validation logic goes here
+    var inputValue =  Tendered.value;
+    // Perform your validation checks on the inputValue
+    
+    // Example validation: Check if input value is not empty
+    if (inputValue.trim() === '') {
+      // Input is empty, show error message or apply invalid styling
+      Tendered.classList.add('error');
+    } else {
+      // Input is valid, remove error message or styling
+      Tendered.classList.remove('error');
+    }
+  });
 
-    console.log(Orderline>0)
+    console.log(Tendered.value)
+    console.log(Subtotal.value)
 
     function checkFormValidity() {
-      if (Table.value && PO.value && PWDS.value && Server.value && Tendered.value && Orderline>0==true) 
-      // && Orderline>0==true)
-      // if (Orderline>0)
+      if (
+  Table.value &&
+  PO.value &&
+  PWDS.value &&
+  Server.value &&
+  Tendered.value &&
+  Orderline.value > 0
+          ) 
       {
         generatereceipt.disabled = false;
       } 
@@ -166,7 +204,8 @@
     PWDS.addEventListener("change", checkFormValidity);
     Server.addEventListener("change", checkFormValidity);
     Tendered.addEventListener("change", checkFormValidity);
-    // Orderline.addEventListener("change", checkFormValidity);
+    Orderline.addEventListener("change", checkFormValidity);
+    Subtotal.addEventListener("change", checkFormValidity);
     
 
     function toggle()

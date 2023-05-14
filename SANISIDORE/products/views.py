@@ -64,26 +64,37 @@ def Order(request):
     ol = Orderlines.objects.filter(OrderID=orderno)
     ol_no = len(ol)
 
+    
+    subtotal = 0
+    ol2 = Orderlines.objects.filter(OrderID=Orders.objects.order_by('-OrderID')[1].pk)
+    for x in ol2:
+        subtotal = subtotal + x.Finalprice
     if request.method == "POST":
+
         server = request.POST['server']
         table = request.POST['table']
         PO = request.POST['PO']
         PWDS = request.POST['pwds']
         T = request.POST['tendered']
 
-        edit_order = Orders.objects.get(pk=orderno)
-        edit_order.Server = server
-        edit_order.Table = table
-        edit_order.PaymentOption = PO
-        edit_order.PWDS = PWDS
-        edit_order.Tendered = T
-        edit_order.save()
+        if Decimal(T)<Decimal(subtotal):
+            messages.info(request, 'Insufficient Funds')
+            return redirect('Order')
         
-        
-        new_order = Orders()
-        new_order.save()
-        messages.info(request, 'Generating Receipt')
-        return redirect('Receipt')
+        else:
+            edit_order = Orders.objects.get(pk=orderno)
+            edit_order.Server = server
+            edit_order.Table = table
+            edit_order.PaymentOption = PO
+            edit_order.PWDS = PWDS
+            edit_order.Tendered = T
+            edit_order.save()
+            
+            
+            new_order = Orders()
+            new_order.save()
+            messages.info(request, 'Generating Receipt')
+            return redirect('Receipt')
 
 
 
@@ -92,7 +103,8 @@ def Order(request):
     'current_order':current_order,
     'products': products, 
     'ol':ol,
-    'ol_no':ol_no
+    'ol_no':ol_no,
+    'subtotal':subtotal
     })
 
 def Orderline(request):
