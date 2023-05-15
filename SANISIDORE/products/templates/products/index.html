@@ -27,6 +27,7 @@ input {
 button {
   background-color: #50AF4F;
   color: white;
+  cursor:pointer ;
   padding: 12px;
   height: 100%;
   width: 100%;
@@ -39,12 +40,38 @@ button {
   appearance: button;
   outline: none;
 }
+@keyframes def {
+    0% {
+      color: white;
+    }
+    50% {
+      color: #F9F850;
+    }
+    100% {
+      color: white;
+    }
+  }
+@keyframes crit {
+  0% {
+    color: black;
+  }
+  50% {
+    color: gray;
+  }
+  100% {
+    color: black;
+  }
+}
+button:hover,.form button:active,.form button:focus {
+  animation: def 1.5s infinite;
+} 
+option {
+    background-color: lightgray;
+    color: white;
+  }
 h1{
   background-color: #F7C045;
   color: black;
-  /* padding: 12px; */
-  /* height: 100%; */
-  /* width: 100%; */
   border: none;
   font-size: 20px;
   box-shadow: -1px 2px 57px 20px rgba(255,246,81,0.36);
@@ -94,10 +121,15 @@ h1{
   -webkit-appearance: button;
   appearance: button;
   outline: none;
+  /* animation: crit 1s infinite; */
+}
+.critical:hover{
+  animation: crit 1.5s infinite;
 }
 select {
   background-color: #50AF4F;
   color: white;
+  cursor: pointer;
   padding: 12px;
   height: 100%;
   width: 100%;
@@ -109,6 +141,9 @@ select {
   -webkit-appearance: button;
   appearance: button;
   outline: none;
+}
+select:hover{
+  animation: def 1.5s infinite;
 }
 .delete-text{
   color: #AF4F50;

@@ -11,6 +11,9 @@ from decimal import Decimal
 
 # Create your views here.
 
+def Login(request):
+    # products = Product.objects.all()
+    return render(request, "products/Login.html")
 
 
 def products(request):

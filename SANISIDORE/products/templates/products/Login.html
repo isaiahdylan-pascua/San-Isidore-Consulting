@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+{% extends 'products/index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+<!-- <!DOCTYPE html>
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
@@ -104,8 +110,9 @@ body {
 }
   </style>
 </head>
-<body>
+<body> -->
 <!-- partial:index.partial.html -->
+{% block content %}
 <div class="login-page">
   <div class="form">
     <form class="login-form">
@@ -118,5 +125,6 @@ body {
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="./script.js"></script>
 
-</body>
-</html>
+<!-- </body>
+</html> -->
+{% endblock %}
