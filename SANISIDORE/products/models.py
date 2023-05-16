@@ -182,4 +182,5 @@ class Employee(AbstractBaseUser):
     REQUIRED_FIELDS = ["EmployeeName", "Occupation","DateofEmployment","EmployeeStreet",
                        "EmployeeBarangay","EmployeeCity","EmployeeProvince","EmployeeZipCode"]
 
-
+    def __str__(self):
+        return "ID:" + str(self.EmployeeID + ";" + str("EmployeeName"))

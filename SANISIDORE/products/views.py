@@ -7,13 +7,18 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 
 # from .models import products
-from .models import Product, Orders, Orderlines, Stocks
+from .models import Product, Orders, Orderlines, Stocks, Employee
+from .forms import user_form
 
 
 # Create your views here.
 
 def register(request):
-    pass
+    form = user_form()
+
+    if form.is_valid():
+        form
+
 def login(request):
     pass
 def logout(request):

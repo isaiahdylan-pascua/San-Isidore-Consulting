@@ -109,7 +109,35 @@ body {
 <div class="form">
   <form method="POST" action="">
     {% crsf token %}
-    {{form.as_p}}
+    {{form.EmployeeName.label}}
+    {{form.EmployeeName}}
+
+    {{form.password1.label]}}
+    {{form.password1}}
+
+    {{form.password2.label}}
+    {{form.password2}}
+
+    {{form.Occupation.label}}
+    {{form.Occupation}}
+
+    {{form.DateofEmployment.label}}
+    {{form.DateofEmployment}}
+
+    {{form.EmployeeStreet.label}}
+    {{form.EmployeeStreet}}
+
+    {{form.EmployeeBarangay.label}}
+    {{form.EmployeeBarangay}}
+
+    {{form.EmployeeCity.label}}
+    {{form.EmployeeCity}}
+
+    {{form.EmployeeProvince.label}}
+    {{form.EmployeeProvince}}
+
+    {{form.EmployeeZipCode.label}}
+    {{form.EmployeeZipCode}}
 
     <input type="submit" name = "Create User">
   </form>
