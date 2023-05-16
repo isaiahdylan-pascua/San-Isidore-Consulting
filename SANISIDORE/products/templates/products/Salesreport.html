@@ -18,7 +18,7 @@
                   {% csrf_token %}
                 <th>
                   <select name="Daily" id="Daily">
-                    <option value="0">Day</option>
+                    <option value="0" disabled selected>Day</option>
                     {% for x in Days %}
                     <option value="{{x}}">{{x}}</option>
                     {% endfor %}
@@ -29,7 +29,7 @@
               
                 <th>
                   <select name="Monthly" id="Monthly">
-                    <option value="0">Month</option>
+                    <option value="0" disabled selected>Month</option>
                     {% for x in Months %}
                     <option value="{{x}}">{{x}}</option>
                     {% endfor %}
@@ -40,13 +40,13 @@
               <!-- Year function -->
                 <th>
                   <select name="Yearly" id="Yearly">
-                    <option value="0">Year</option>
+                    <option value="" disabled selected>Year</option>
                     {% for x in Years %}
                     <option value="{{x}}">{{x}}</option>
                     {% endfor %}
                   </select>
                 </th>
-                <th><button class="critical">Sort and Display</button> <br></th>
+                <th><button class="critical" id="SortDisplay" disabled>Sort and Display</button> <br></th>
               </form>
               
               </tr>
@@ -86,4 +86,27 @@
       
     
     </div>
+    <script>
+      const Daily = document.getElementById("Daily");
+      const Monthly = document.getElementById("Monthly");
+      const Yearly = document.getElementById("Yearly");
+      
+      console.log(Daily.value)
+  
+      function toggleButtonState() {
+  // Check the conditions and enable/disable the button accordingly
+  if (Yearly.value && Monthly.value !== '0' && Daily.value !== '0') {
+    SortDisplay.disabled = false;
+  } else if (Yearly.value && Monthly.value !== '0' && Daily.value == '0') {
+    SortDisplay.disabled = false;
+  } else if (Yearly.value && Monthly.value == '0' && Daily.value == '0') {
+    SortDisplay.disabled = false;
+  } else {
+    SortDisplay.disabled = true;
+  }
+}
+      Daily.addEventListener("change", toggleButtonState);
+      Monthly.addEventListener("change", toggleButtonState);
+      Yearly.addEventListener("change", toggleButtonState);
+      </script>
     {% endblock %}
