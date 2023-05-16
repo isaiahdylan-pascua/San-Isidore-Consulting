@@ -126,6 +126,25 @@ h1{
 .critical:hover{
   animation: crit 1.5s infinite;
 }
+button[disabled] {
+  /* Styles for disabled buttons */
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+}
+
+button[disabled]:hover {
+  /* Styles for disabled buttons on hover */
+  animation: none;
+  background-color: gray;
+  color: white;
+}
+
+button[disabled]:focus {
+  /* Styles for disabled buttons when focused */
+  outline: none;
+  box-shadow: none;
+}
 select {
   background-color: #50AF4F;
   color: white;
