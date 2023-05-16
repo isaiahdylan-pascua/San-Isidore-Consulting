@@ -1,44 +1,70 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.core import serializers
-from .models import *
-<<<<<<< Updated upstream
-=======
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+
 # from .models import products
->>>>>>> Stashed changes
+from .models import Product, Orders, Orderlines, Stocks
 
 
 # Create your views here.
 
-
+def register(request):
+    pass
+def login(request):
+    pass
+def logout(request):
+    pass
+    
 
 def products(request):
-    return render(request, "products/ProductListPrototype.html")
+    products = Product.objects.all()
+    return render(request, "products/ProductListPrototype.html", {'products': products})
 
 def addProduct(request):
+    products = Product.objects.all()
     if request.method == "POST":
         prodname = request.POST['name']
         prodprice = request.POST['price']
-        
-        new_prod = Product(ProductName=prodname, ProductCost=prodprice)
+        new_prod = Product(ProductName=prodname, ProductCost=prodprice, ProductStock=0)
         new_prod.save()
+
+        # Product.objects.create(ProductName=prodname, ProductCost=prodprice)
     
-    return render(request, "products/ProductListPrototype.html")
+    return render(request, "products/ProductListPrototype.html", {'products': products})
+
+def Stock(request):
+    products = Product.objects.all()
+
+    if request.method == "POST":
+        Stockitem = request.POST['Product']
+        Stockqty = request.POST['stock']
+        
+        restock = Product.objects.get(ProductID = Stockitem)
+        restock.ProductStock = Stockqty
+        restock.save()
+    return render(request, "products/ProductListPrototype.html", {'products': products})
 
 def displayProduct(request):
+    products = Product.objects.all()
+    return render(request, "products/test.html", {'products': products})
 
-    data = serializers.serialize("python", Product.objects.all())
+def Order(request):
+    #List of all products
+    products = Product.objects.all()
 
-<<<<<<< Updated upstream
-    return render(request, "products/ProductListPrototype.html", context={'data'= data})
-=======
     #If Order list is empty, assign 0 to orderno
     if len(Orders.objects.all()) > 0:
+        current_order = Orders.objects.order_by('-OrderID')[0]
         orderno = current_order.pk
     else:
+        new_order = Orders()
+        new_order.save()
         orderno = 0
+        current_order = 0
 
     #Orderline with the highest pk, otherwise known as current list of ordered products
     ol = Orderlines.objects.filter(OrderID=orderno)
@@ -75,18 +101,20 @@ def displayProduct(request):
 
 def Orderline(request):
     products = Product.objects.all()
-    current_order = Orders.objects.order_by('-OrderID')[0]
     if len(Orders.objects.all()) > 0:
+        current_order = Orders.objects.order_by('-OrderID')[0]
         orderno = current_order.pk
     else:
         orderno = 0
+        current_order = 0
     ol = Orderlines.objects.filter(OrderID=orderno)
     if request.method == "POST":
         orderid = orderno
         P = request.POST['Product']
-        pqty = request.POST['qty']
+        pqty = int(request.POST['qty'])
         dsc = request.POST['dsc']
         Pdesc = Product.objects.get(ProductID=P).ProductName
+        Pstock = Product.objects.get(ProductID=P).ProductStock
         PCost = int(Product.objects.filter(ProductID=P)[0].ProductCost)
 
         if dsc == 'True':
@@ -94,19 +122,32 @@ def Orderline(request):
         else:
             FP = int(pqty)*PCost
 
-        if len(Orderlines.objects.filter(Product = P, OrderID = orderid)) == 0:
-            new_orderline = Orderlines(OrderID=orderid, Product=P, ProductCost=PCost, ProductQty=pqty, Discount=dsc, ProductDesc=Pdesc, Finalprice=FP)
-            new_orderline.save()
-            return redirect('Order')
+        if (Pstock-pqty) < 0:
+            messages.error(request, 'Insufficient stock')
+
         else:
-            edit_orderline = Orderlines.objects.get(Product = P, OrderID = orderid)
-            edit_orderline.ProductCost = PCost
-            edit_orderline.ProductQty = pqty
-            edit_orderline.Discount = dsc
-            edit_orderline.ProductDesc = Pdesc
-            edit_orderline.Finalprice = FP
-            edit_orderline.save()
-            return redirect('Order')   
+            if len(Orderlines.objects.filter(Product = P, OrderID = orderid)) == 0:
+                new_orderline = Orderlines(OrderID=orderid, Product=P, ProductCost=PCost, ProductQty=pqty, Discount=dsc, ProductDesc=Pdesc, Finalprice=FP)
+                new_orderline.save()
+
+                stockupdate = Product.objects.get(ProductID=P)
+                stockupdate.ProductStock = Pstock - pqty
+                stockupdate.save()
+
+                return redirect('Order')
+            else:
+                edit_orderline = Orderlines.objects.get(Product = P, OrderID = orderid)
+                edit_orderline.ProductCost = PCost
+                edit_orderline.ProductQty = pqty
+                edit_orderline.Discount = dsc
+                edit_orderline.ProductDesc = Pdesc
+                edit_orderline.Finalprice = FP
+                edit_orderline.save()
+
+                stockupdate = Product.objects.get(ProductID=P)
+                stockupdate.ProductStock = Pstock - pqty
+                stockupdate.save()
+                return redirect('Order')   
 
 
         return render(request, "products/Order.html", 
@@ -164,51 +205,13 @@ def Receipt(request):
 
     })
 
-def signup(request):
-    if(request.method == "POST"):
-        un = request.POST.get('username')
-        pw = request.POST.get('password')
-        pw_re = request.POST.get('password-reenter')
+# def Salesreport(request):
+#     stocks = Stocks.objects.all()
+
+#     if request.method == "POST":
+#         Stockname = request.POST['name']
+#         Stockqty = request.POST['qty']
         
-        ver = User.objects.filter(username = un)
-        if len(ver)>0:
-            messages.info(request, 'USERNAME IS ALREADY TAKEN')
-            return redirect('Signup')
-        else:
-            if pw == pw_re:
-                User.objects.create(username = un, password = pw)
-                messages.info(request, 'RECORD SUCCESSFULLY CREATED')
-                return redirect('Login')
-            else:
-                messages.info(request, 'PASSWORD DOES NOT MATCH')
-                return redirect('Signup')
-    else:
-        return render(request, 'products/Signup.html')
-    
-def login(request):
-    if(request.method == "POST"):
-        un = request.POST.get('username')
-        pw = request.POST.get('password')
-
-        list = User.objects.filter(username = un)
-
-        if(len(list)>0):
-            acct = list[0]
-
-            if(acct.getPassword() == pw):
-                global logged
-                logged = acct
-
-                messages.success(request, 'SUCCESSFUL LOGIN')
-                return redirect('home')
-            else:
-                messages.info(request, 'INVALID LOGIN')
-                return render(request, 'products/Login.html')
-
-        else:
-            messages.info(request, 'INVALID LOGIN')
-            return render(request, 'products/Login.html')
-    
-    else:
-        return render(request, 'products/Login.html')
->>>>>>> Stashed changes
+#         new_stock = Stocks(Stockname=Stockname, Stockqty=Stockqty)
+#         new_stock.save()
+#     return render(request, "products/Salesreport.html", {'stocks':stocks})

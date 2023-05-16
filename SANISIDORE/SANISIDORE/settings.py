@@ -28,6 +28,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TIME_ZONE = 'Hongkong'
+
+DATE_INPUT_FORMATS = ['%m-%d-%Y']
+
+AUTH_USER_MODELS = "products.Employee"
+
 
 # Application definition
 
