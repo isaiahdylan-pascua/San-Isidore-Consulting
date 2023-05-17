@@ -18,7 +18,7 @@
                   {% csrf_token %}
                 <th>
                   <select name="Daily" id="Daily">
-                    <option value="0" disabled selected>Day</option>
+                    <option value="0">Day</option>
                     {% for x in Days %}
                     <option value="{{x}}">{{x}}</option>
                     {% endfor %}
@@ -29,7 +29,7 @@
               
                 <th>
                   <select name="Monthly" id="Monthly">
-                    <option value="0" disabled selected>Month</option>
+                    <option value="0">Month</option>
                     {% for x in Months %}
                     <option value="{{x}}">{{x}}</option>
                     {% endfor %}
@@ -40,7 +40,7 @@
               <!-- Year function -->
                 <th>
                   <select name="Yearly" id="Yearly">
-                    <option value="" disabled selected>Year</option>
+                    <option value="">Year</option>
                     {% for x in Years %}
                     <option value="{{x}}">{{x}}</option>
                     {% endfor %}

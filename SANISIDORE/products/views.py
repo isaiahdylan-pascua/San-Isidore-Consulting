@@ -255,7 +255,6 @@ def Salesreport(request):
     return render(request, "products/Salesreport.html", 
     {
     'Days':range(1, 32),
-    # 'Months':['-', 'January', 'February','March','April','May','June','July','August','September','October','November','December'], 
     'Months':range(1,13),
     'Years':range(2000, 2051),
     'O':O
