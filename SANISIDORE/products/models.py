@@ -103,22 +103,22 @@ class Stocks(models.Model):
     def __str__(self):
         return "ID: " + str(self.StockID) + " Stock: " + str(self.Stockname) + " Amount: " + str(self.Stockqty)
 
-class Employee(models.Model):
-    EmployeeID = models.IntegerField(verbose_name = "Employee ID", primary_key=True, unique=True, validators=[MaxLengthValidator(6)])
-    EmployeeName = models.CharField(max_length = 30, verbose_name = "Employee Name")
-    Occupation = models.CharField(max_length = 30, verbose_name = "Occupation")
-    DateofEmployment = models.DateField(verbose_name = "Date of Employment")
-    EmployeeStreet = models.CharField(max_length = 30, verbose_name = "Street Address")
-    EmployeeBarangay = models.CharField(max_length = 30, verbose_name = "Barangay Address")
-    EmployeeCity = models.CharField(max_length = 30, verbose_name = "City/Municipality Address")
-    EmployeeProvince = models.CharField(max_length = 30, verbose_name = "Province Address")
-    EmployeeZipCode = models.IntegerField(verbose_name = "Zip Code", validators=[MaxLengthValidator(6)])
-    is_admin = models.BooleanField(default=True)
-    is_active = models.BooleanField(default=True)
+# class Employee(models.Model):
+#     EmployeeID = models.IntegerField(verbose_name = "Employee ID", primary_key=True, unique=True, validators=[MaxLengthValidator(6)])
+#     EmployeeName = models.CharField(max_length = 30, verbose_name = "Employee Name")
+#     Occupation = models.CharField(max_length = 30, verbose_name = "Occupation")
+#     DateofEmployment = models.DateField(verbose_name = "Date of Employment")
+#     EmployeeStreet = models.CharField(max_length = 30, verbose_name = "Street Address")
+#     EmployeeBarangay = models.CharField(max_length = 30, verbose_name = "Barangay Address")
+#     EmployeeCity = models.CharField(max_length = 30, verbose_name = "City/Municipality Address")
+#     EmployeeProvince = models.CharField(max_length = 30, verbose_name = "Province Address")
+#     EmployeeZipCode = models.IntegerField(verbose_name = "Zip Code", validators=[MaxLengthValidator(6)])
+#     is_admin = models.BooleanField(default=True)
+#     is_active = models.BooleanField(default=True)
 
-    USERNAME_FIELD = "EmployeeID"
-    REQUIRED_FIELDS = ["EmployeeName", "Occupation","DateofEmployment","EmployeeStreet",
-                       "EmployeeBarangay","EmployeeCity","EmployeeProvince","EmployeeZipCode"]
+#     USERNAME_FIELD = "EmployeeID"
+#     REQUIRED_FIELDS = ["EmployeeName", "Occupation","DateofEmployment","EmployeeStreet",
+#                        "EmployeeBarangay","EmployeeCity","EmployeeProvince","EmployeeZipCode"]
 
-    def __str__(self):
-        return "ID:" + str(self.EmployeeID + ";" + str("EmployeeName"))
+#     def __str__(self):
+#         return "ID:" + str(self.EmployeeID + ";" + str("EmployeeName"))

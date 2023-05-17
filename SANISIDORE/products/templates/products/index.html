@@ -107,6 +107,19 @@ h1{
       filter: grayscale(100%);
       width: 1.5in;
     }
+    #logpic{
+      width: 3in;
+    }
+    .image-cont{
+      display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+    }
+    .logforms{
+      width: 5cm;
+    }
 .critical{
   background-color: #FAF850;
   color: black  ;
@@ -277,7 +290,7 @@ select:hover{
 <body style="background-color: #2b9736;">
     {% load static %}
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-    <a class="navbar-brand" href="#"><img style="width: 2cm; text-align: center;" class="BG" src="{% static 'Images/BG.png' %}" alt="BG"></a>
+    <a class="navbar-brand" href="{% url 'Login' %}"><img style="width: 2cm; text-align: center;" class="BG" src="{% static 'Images/BG.png' %}" alt="BG"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -295,7 +308,7 @@ select:hover{
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Log Off</a>
+          <a class="nav-link"><p style="color: white;" id="time"></p></a>
         </li>
       </ul>
     </div>
@@ -308,5 +321,24 @@ select:hover{
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script>
+    function updateTime() {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+
+  const formattedTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+
+  document.getElementById("time").textContent = formattedTime;
+}
+
+function padZero(number) {
+  return number.toString().padStart(2, "0");
+}
+
+// Update the time every second
+setInterval(updateTime, 1000);
+  </script>
 </body>
 </html>

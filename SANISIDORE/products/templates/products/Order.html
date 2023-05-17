@@ -119,10 +119,10 @@
         <th colspan="2">Add Item / Edit Item</th>
     
       <tr>
-        <td><label for="Product"><b>Product</b></label></td>
+        <td><label for="Product"><b>Item</b></label></td>
         <td>
           <select name="Product" id="Product">
-            <option value="" disabled>Enter Product</option>
+            <option value="" disabled>Enter Item</option>
             {% for p in products %}
             <option value="{{p.pk}}">{{p.ProductName}}</option>
             {% endfor %}
